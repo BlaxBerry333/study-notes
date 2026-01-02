@@ -37,6 +37,7 @@ const { frontmatter, page } = useData()
   <!-- 404 Not Found page -->
   <template v-else-if="page.isNotFound">
     <CustomNotFoundPage />
+    <SiteFooter />
     <GridBackground />
     <MatrixRain />
   </template>

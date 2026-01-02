@@ -2,8 +2,8 @@
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter, withBase } from 'vitepress'
 import ActionButton from '../components/ActionButton.vue'
+import NeonDivider from '../components/NeonDivider.vue'
 import SpeechBubble from '../components/SpeechBubble.vue'
-import SiteFooter from '../layouts/SiteFooter.vue'
 
 const router = useRouter()
 
@@ -21,30 +21,28 @@ function goHome() {
   router.go(withBase('/'))
 }
 
-// Error messages in 40K Cogitator style
-const ERROR_MESSAGES = [
-  'MEMORY SEGMENT NOT FOUND',
-  'DATA RETRIEVAL FAILURE',
-  'MACHINE SPIRIT DISPLEASED.',
-
-]
+// Text constants
+const TEXT = {
+  TITLE: 'NOT FOUND',
+  SPEECH: [
+    'DATA RETRIEVAL FAILURE. 404 ERROR.',
+    'REQUESTED MEMORY FRAGMENTS NOT FOUND.',
+    'MACHINE SPIRIT DISPLEASED.',
+  ],
+  BUTTON: '[RETURN TO ARCHIVES]',
+}
 </script>
 
 <template>
   <div class="STUDY-NOTES--not-found">
-    <div class="STUDY-NOTES--not-found-container">
-      <!-- 404 Code -->
-      <h1 class="STUDY-NOTES--not-found-code">404</h1>
-
-      <!-- Terminal output using SpeechBubble -->
-      <br />
-      <SpeechBubble :messages="ERROR_MESSAGES" :char-delay="30" :line-delay="600" />
-
-      <!-- Action button -->
-      <ActionButton @click="goHome">[RETURN TO ARCHIVES]</ActionButton>
-    </div>
-
-    <SiteFooter />
+    <h1 class="STUDY-NOTES--not-found-title">
+      <span>{{ TEXT.TITLE }}</span>
+      <NeonDivider width="100%" />
+    </h1>
+    <br />
+    <SpeechBubble :messages="TEXT.SPEECH" :char-delay="30" :line-delay="600" />
+    <br />
+    <ActionButton @click="goHome">{{ TEXT.BUTTON }}</ActionButton>
   </div>
 </template>
 
@@ -56,24 +54,18 @@ const ERROR_MESSAGES = [
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--STUDY-NOTES--spacing-4);
   padding: var(--STUDY-NOTES--spacing-4);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
   background: var(--STUDY-NOTES--cyber-bg-start);
   color: var(--STUDY-NOTES--cyber-text-primary);
   overflow: hidden;
 }
 
-.STUDY-NOTES--not-found-container {
-  text-align: center;
-  max-width: 600px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 /* 404 Code - 与 HomePage Hero Title 一致 */
-.STUDY-NOTES--not-found-code {
+.STUDY-NOTES--not-found-title {
   font-family: var(--STUDY-NOTES--font-display);
   font-size: var(--STUDY-NOTES--text-3xl);
   font-weight: var(--STUDY-NOTES--font-bold);
@@ -85,7 +77,7 @@ const ERROR_MESSAGES = [
 }
 
 @media (min-width: 1024px) {
-  .STUDY-NOTES--not-found-code {
+  .STUDY-NOTES--not-found-title {
     font-size: var(--STUDY-NOTES--text-5xl);
   }
 }
