@@ -1,0 +1,226 @@
+/**
+ * Design Tokens - Chen's Study Notes
+ * Based on designer-spec.md
+ */
+
+:root {
+  /* ============================================
+   * Cyberpunk Theme Colors (Homepage)
+   * ============================================ */
+
+  /* Neon colors */
+  --STUDY-NOTES--neon-green: #00ff9f;
+  --STUDY-NOTES--neon-green-dim: #00cc7f;
+  --STUDY-NOTES--neon-green-glow: rgba(0, 255, 159, 0.4);
+
+  --STUDY-NOTES--neon-pink: #ff00ff;
+  --STUDY-NOTES--neon-pink-dim: #cc00cc;
+  --STUDY-NOTES--neon-pink-glow: rgba(255, 0, 255, 0.4);
+
+  --STUDY-NOTES--neon-cyan: #00ffff;
+  --STUDY-NOTES--neon-cyan-dim: #00cccc;
+  --STUDY-NOTES--neon-cyan-glow: rgba(0, 255, 255, 0.4);
+
+  --STUDY-NOTES--neon-yellow: #ffff00;
+  --STUDY-NOTES--neon-orange: #ff6b00;
+
+  /* Cyberpunk background */
+  --STUDY-NOTES--cyber-bg-start: #0a0a0f;
+  --STUDY-NOTES--cyber-bg-end: #1a1a2e;
+
+  /* Cyberpunk surface */
+  --STUDY-NOTES--cyber-surface: rgba(26, 26, 46, 0.8);
+  --STUDY-NOTES--cyber-surface-hover: rgba(26, 26, 46, 0.95);
+  --STUDY-NOTES--cyber-border: rgba(0, 255, 159, 0.3);
+  --STUDY-NOTES--cyber-border-hover: rgba(0, 255, 159, 0.6);
+
+  /* Cyberpunk text */
+  --STUDY-NOTES--cyber-text-primary: #ffffff;
+  --STUDY-NOTES--cyber-text-secondary: rgba(255, 255, 255, 0.7);
+  --STUDY-NOTES--cyber-text-muted: rgba(255, 255, 255, 0.5);
+
+  /* ============================================
+   * VitePress Theme Overrides (Light Mode)
+   * ============================================ */
+
+  --vp-c-brand-1: #10b981;
+  --vp-c-brand-2: #059669;
+  --vp-c-brand-3: #047857;
+  --vp-c-brand-soft: rgba(16, 185, 129, 0.14);
+
+  /* ============================================
+   * Semantic Colors
+   * ============================================ */
+
+  --STUDY-NOTES--color-success: #10b981;
+  --STUDY-NOTES--color-success-soft: rgba(16, 185, 129, 0.14);
+
+  --STUDY-NOTES--color-warning: #f59e0b;
+  --STUDY-NOTES--color-warning-soft: rgba(245, 158, 11, 0.14);
+
+  --STUDY-NOTES--color-error: #ef4444;
+  --STUDY-NOTES--color-error-soft: rgba(239, 68, 68, 0.14);
+
+  --STUDY-NOTES--color-info: #3b82f6;
+  --STUDY-NOTES--color-info-soft: rgba(59, 130, 246, 0.14);
+
+  /* ============================================
+   * Typography
+   * ============================================ */
+
+  --STUDY-NOTES--font-sans:
+    "Inter", "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo",
+    system-ui, -apple-system, sans-serif;
+
+  --STUDY-NOTES--font-mono:
+    "JetBrains Mono", "Fira Code", "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+
+  --STUDY-NOTES--font-display: "Orbitron", "Share Tech Mono", var(--STUDY-NOTES--font-mono);
+
+  /* Font sizes - Mobile First */
+  --STUDY-NOTES--text-xs: 0.75rem; /* 12px */
+  --STUDY-NOTES--text-sm: 0.875rem; /* 14px */
+  --STUDY-NOTES--text-base: 1rem; /* 16px */
+  --STUDY-NOTES--text-lg: 1.125rem; /* 18px */
+  --STUDY-NOTES--text-xl: 1.25rem; /* 20px */
+  --STUDY-NOTES--text-2xl: 1.5rem; /* 24px */
+  --STUDY-NOTES--text-3xl: 2rem; /* 32px */
+  --STUDY-NOTES--text-4xl: 2.5rem; /* 40px */
+  --STUDY-NOTES--text-5xl: 3rem; /* 48px */
+
+  /* Line heights */
+  --STUDY-NOTES--leading-none: 1;
+  --STUDY-NOTES--leading-tight: 1.25;
+  --STUDY-NOTES--leading-snug: 1.375;
+  --STUDY-NOTES--leading-normal: 1.5;
+  --STUDY-NOTES--leading-relaxed: 1.75;
+  --STUDY-NOTES--leading-loose: 2;
+  --STUDY-NOTES--leading-jp: 1.8;
+
+  /* Font weights */
+  --STUDY-NOTES--font-normal: 400;
+  --STUDY-NOTES--font-medium: 500;
+  --STUDY-NOTES--font-semibold: 600;
+  --STUDY-NOTES--font-bold: 700;
+
+  /* ============================================
+   * Spacing (4px base)
+   * ============================================ */
+
+  --STUDY-NOTES--spacing-0: 0;
+  --STUDY-NOTES--spacing-1: 0.25rem; /* 4px */
+  --STUDY-NOTES--spacing-2: 0.5rem; /* 8px */
+  --STUDY-NOTES--spacing-3: 0.75rem; /* 12px */
+  --STUDY-NOTES--spacing-4: 1rem; /* 16px */
+  --STUDY-NOTES--spacing-5: 1.25rem; /* 20px */
+  --STUDY-NOTES--spacing-6: 1.5rem; /* 24px */
+  --STUDY-NOTES--spacing-8: 2rem; /* 32px */
+  --STUDY-NOTES--spacing-10: 2.5rem; /* 40px */
+  --STUDY-NOTES--spacing-12: 3rem; /* 48px */
+  --STUDY-NOTES--spacing-16: 4rem; /* 64px */
+  --STUDY-NOTES--spacing-20: 5rem; /* 80px */
+  --STUDY-NOTES--spacing-24: 6rem; /* 96px */
+
+  /* Content padding */
+  --STUDY-NOTES--content-padding-mobile: var(--STUDY-NOTES--spacing-4);
+  --STUDY-NOTES--content-padding-tablet: var(--STUDY-NOTES--spacing-6);
+  --STUDY-NOTES--content-padding-desktop: var(--STUDY-NOTES--spacing-8);
+
+  /* ============================================
+   * Border Radius
+   * ============================================ */
+
+  --STUDY-NOTES--radius-none: 0;
+  --STUDY-NOTES--radius-sm: 4px;
+  --STUDY-NOTES--radius-md: 8px;
+  --STUDY-NOTES--radius-lg: 12px;
+  --STUDY-NOTES--radius-xl: 16px;
+  --STUDY-NOTES--radius-2xl: 24px;
+  --STUDY-NOTES--radius-full: 9999px;
+
+  /* ============================================
+   * Shadows
+   * ============================================ */
+
+  --STUDY-NOTES--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --STUDY-NOTES--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --STUDY-NOTES--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --STUDY-NOTES--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* Neon glow effects - Homepage (box-shadow) */
+  --STUDY-NOTES--glow-green:
+    0 0 20px var(--STUDY-NOTES--neon-green-glow), 0 0 40px var(--STUDY-NOTES--neon-green-glow);
+  --STUDY-NOTES--glow-pink:
+    0 0 20px var(--STUDY-NOTES--neon-pink-glow), 0 0 40px var(--STUDY-NOTES--neon-pink-glow);
+  --STUDY-NOTES--glow-cyan:
+    0 0 20px var(--STUDY-NOTES--neon-cyan-glow), 0 0 40px var(--STUDY-NOTES--neon-cyan-glow);
+
+  --STUDY-NOTES--glow-card: 0 0 30px rgba(0, 255, 159, 0.2), inset 0 0 20px rgba(0, 255, 159, 0.05);
+
+  /* Neon text glow effects - Homepage (text-shadow) */
+  --STUDY-NOTES--text-glow-green:
+    0 0 10px var(--STUDY-NOTES--neon-green-glow), 0 0 20px var(--STUDY-NOTES--neon-green-glow), 0 0
+    40px var(--STUDY-NOTES--neon-green-glow);
+  --STUDY-NOTES--text-glow-green-sm:
+    0 0 10px var(--STUDY-NOTES--neon-green-glow), 0 0 20px var(--STUDY-NOTES--neon-green-glow);
+  --STUDY-NOTES--text-glow-red:
+    0 0 10px rgba(255, 51, 51, 0.6), 0 0 20px rgba(255, 51, 51, 0.6), 0 0 40px
+    rgba(255, 51, 51, 0.6);
+
+  /* ============================================
+   * Layout
+   * ============================================ */
+
+  --STUDY-NOTES--max-width-content: 1200px;
+  --STUDY-NOTES--max-width-prose: 720px;
+  --STUDY-NOTES--max-width-wide: 1400px;
+
+  /* ============================================
+   * Breakpoints (for reference in JS)
+   * ============================================ */
+
+  --STUDY-NOTES--breakpoint-sm: 640px;
+  --STUDY-NOTES--breakpoint-md: 768px;
+  --STUDY-NOTES--breakpoint-lg: 1024px;
+  --STUDY-NOTES--breakpoint-xl: 1280px;
+  --STUDY-NOTES--breakpoint-2xl: 1536px;
+
+  /* ============================================
+   * Animation
+   * ============================================ */
+
+  --STUDY-NOTES--duration-fast: 150ms;
+  --STUDY-NOTES--duration-normal: 300ms;
+  --STUDY-NOTES--duration-slow: 500ms;
+
+  --STUDY-NOTES--ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --STUDY-NOTES--ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --STUDY-NOTES--ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --STUDY-NOTES--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --STUDY-NOTES--ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ============================================
+ * Dark Mode Overrides
+ * ============================================ */
+
+.dark {
+  --vp-c-brand-1: #00ff9f;
+  --vp-c-brand-2: #00cc7f;
+  --vp-c-brand-3: #00aa6a;
+  --vp-c-brand-soft: rgba(0, 255, 159, 0.14);
+
+  /* Background colors matching cyberpunk theme */
+  --vp-c-bg: #1a1a2e;
+  --vp-c-bg-soft: #242442;
+  --vp-c-bg-mute: #2e2e4a;
+
+  /* Text colors */
+  --vp-c-text-1: rgba(255, 255, 255, 0.92);
+  --vp-c-text-2: rgba(255, 255, 255, 0.7);
+  --vp-c-text-3: rgba(255, 255, 255, 0.5);
+
+  /* Border colors */
+  --vp-c-border: rgba(255, 255, 255, 0.1);
+  --vp-c-divider: rgba(255, 255, 255, 0.08);
+}

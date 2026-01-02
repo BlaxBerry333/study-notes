@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chen.github.io/study-notes/sitemap.xml

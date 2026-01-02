@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "docs/.vitepress/cache",
+    "docs/.vitepress/dist",
+    "package-lock.json",
+    "*.svg",
+    "*.ico"
+  ],
+  "ignoreRegExpList": ["/#[0-9a-fA-F]{3,8}/", "/rgba?\\([^)]+\\)/", "/--[a-zA-Z-]+/"],
+  "words": [
+    "biomejs",
+    "cyberpunk",
+    "vitepress",
+    "vitejs",
+    "composables",
+    "antialiased",
+    "grayscale",
+    "JLPT",
+    "hiragino",
+    "meiryo",
+    "noto",
+    "orbitron",
+    "devops",
+    "frontmatter",
+    "minisearch",
+    "prebuild",
+    "buildinfo",
+    "rgba",
+    "scanline",
+    "Warhammer",
+    "vitesse",
+    "noopener",
+    "noreferrer"
+  ]
+}

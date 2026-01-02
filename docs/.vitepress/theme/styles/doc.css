@@ -1,0 +1,1046 @@
+/**
+ * Document Page Styles - Chen's Study Notes
+ * 40K Cogitator Theme - VitePress Layout Override
+ *
+ * 覆盖 VitePress 默认布局，实现统一的赛博朋克风格
+ */
+
+/* ============================================
+ * VitePress Layout Override - 布局覆盖
+ * 强制暗色主题 + 背景色
+ * ============================================ */
+
+/* 全局背景覆盖 - 统一透明 */
+.dark {
+  --vp-c-bg: transparent;
+  --vp-c-bg-soft: var(--STUDY-NOTES--cyber-surface);
+  --vp-c-bg-alt: transparent;
+  --vp-c-bg-elv: var(--STUDY-NOTES--cyber-surface);
+}
+
+/* 主体背景 - 纯色 */
+.dark body {
+  background: var(--STUDY-NOTES--cyber-bg-start);
+}
+
+/* 所有容器透明 */
+.dark .VPContent,
+.dark .VPDoc,
+.dark .VPDoc .container,
+.dark .VPDoc .content-container,
+.dark .VPDoc .content,
+.dark .content-body,
+.dark .VPPage,
+.dark .VPDocAside,
+.dark .VPDocAside .aside-container,
+.dark .VPDocAside .aside-content,
+.dark .VPDoc .aside,
+.dark .aside-curtain {
+  background: transparent;
+}
+
+/* ============================================
+ * VPNav - 顶部导航栏
+ * ============================================ */
+
+.dark .VPNav {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .VPNavBar {
+  background: transparent;
+}
+
+/* VPNav 底部分隔线 - 使用伪元素确保显示 */
+.dark .VPNav .divider,
+.dark .VPNavBar .divider {
+  background: var(--STUDY-NOTES--cyber-border) !important;
+}
+
+.dark .VPNav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--STUDY-NOTES--cyber-border);
+  z-index: 10;
+}
+
+/* VitePress 图标 - 使用 mask-image + background-color 技术 */
+/* 需要覆盖 background-color 来改变图标颜色 */
+.dark [class*="vpi-"] {
+  background-color: var(--STUDY-NOTES--neon-green-dim) !important;
+}
+
+.dark *:hover > [class*="vpi-"],
+.dark [class*="vpi-"]:hover {
+  background-color: var(--STUDY-NOTES--neon-green) !important;
+}
+
+/* 网站标题 - 与 HomePage Hero Title 一致 */
+.dark .VPNavBarTitle .title {
+  font-family: var(--STUDY-NOTES--font-display);
+  font-weight: var(--STUDY-NOTES--font-bold);
+  font-size: larger;
+  color: var(--STUDY-NOTES--cyber-text-primary);
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+  letter-spacing: 0.05em;
+}
+
+.dark .VPNavBarTitle .VPImage.logo {
+  display: none;
+}
+
+/* 导航链接 */
+.dark .VPNavBarMenuLink {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  transition: all 0.15s ease;
+}
+
+.dark .VPNavBarMenuLink:hover {
+  color: #ffffff;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+.dark .VPNavBarMenuLink.active {
+  color: var(--STUDY-NOTES--neon-green);
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
+}
+
+/* 导航下拉菜单组触发器 - VitePress NavBarMenuGroup */
+.dark .VPNavBarMenuGroup .button .text,
+.dark .VPNavBarMenuGroup > button > .text,
+.dark .VPNavBar .VPNavBarMenuGroup .text {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+  font-size: 13px !important;
+  letter-spacing: 0.02em;
+  transition: all 0.15s ease !important;
+}
+
+.dark .VPNavBarMenuGroup:hover .button .text,
+.dark .VPNavBarMenuGroup:hover > button > .text,
+.dark .VPNavBar .VPNavBarMenuGroup:hover .text {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
+}
+
+/* 下拉菜单容器 - VitePress Menu */
+.dark .VPNavBarMenuGroup .VPMenu,
+.dark .VPMenu {
+  position: relative;
+  z-index: 20;
+  transform: translateY(12px);
+  background: var(--STUDY-NOTES--cyber-bg-start) !important;
+  border: 1px solid var(--STUDY-NOTES--cyber-border) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 下拉菜单链接项 */
+.dark .VPMenu .VPMenuLink .link,
+.dark .VPNavBarMenuGroup .VPMenu a,
+.dark .VPMenu a {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+
+.dark .VPMenu .VPMenuLink:hover .link,
+.dark .VPMenu .VPMenuLink .link:hover,
+.dark .VPNavBarMenuGroup .VPMenu a:hover,
+.dark .VPMenu a:hover {
+  color: #ffffff !important;
+  background: rgba(0, 255, 159, 0.08) !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
+}
+
+.dark .VPMenu .VPMenuLink.active .link,
+.dark .VPNavBarMenuGroup .VPMenu a.active,
+.dark .VPMenu a.active {
+  color: var(--STUDY-NOTES--neon-green) !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm) !important;
+}
+
+/* 下拉菜单分组标题 */
+.dark .VPMenu .VPMenuGroup .title,
+.dark .VPNavBarMenuGroup .VPMenu .VPMenuGroup .title {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* 搜索按钮 */
+.dark .DocSearch-Button {
+  background: var(--STUDY-NOTES--cyber-surface);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+.dark .DocSearch-Button:hover {
+  border-color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* 社交链接 */
+.dark .VPSocialLinks a,
+.dark .VPNavBarSocialLinks a,
+.dark .social-links a {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  transition: all 0.15s ease !important;
+}
+
+.dark .VPSocialLinks a:hover,
+.dark .VPNavBarSocialLinks a:hover,
+.dark .social-links a:hover {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
+}
+
+/* ============================================
+ * VPSidebar - 侧边栏
+ * ============================================ */
+
+.dark .VPSidebar {
+  background: transparent;
+  border-right: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-top: none;
+}
+
+/* 移除侧边栏顶部的遮罩/阴影 */
+.dark .VPSidebar .curtain,
+.dark .VPSidebar::before {
+  display: none;
+}
+
+/* 侧边栏分组标题 - 40K 终端风格 */
+.dark .VPSidebarItem.level-0 > .item > .text {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.dark .VPSidebarItem.level-0 > .item:hover > .text {
+  color: #ffffff;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+/* 侧边栏链接 - VPLink .link .text 结构 */
+.dark .VPSidebarItem .item .VPLink .text,
+.dark .VPSidebarItem .item .link .text,
+.dark .VPSidebarItem.level-1 > .item > .link > .text,
+.dark .VPSidebarItem.level-2 > .item > .link > .text {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+
+.dark .VPSidebarItem .item .VPLink:hover .text,
+.dark .VPSidebarItem .item .link:hover .text,
+.dark .VPSidebarItem.level-1 > .item > .link:hover > .text,
+.dark .VPSidebarItem.level-2 > .item > .link:hover > .text {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
+}
+
+/* 当前激活的链接 */
+.dark .VPSidebarItem.is-active .item .VPLink .text,
+.dark .VPSidebarItem.is-active .item .link .text,
+.dark .VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--STUDY-NOTES--neon-green) !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm) !important;
+}
+
+/* 侧边栏激活指示器 - 发光效果 */
+.dark .VPSidebarItem.is-active > .item > .indicator {
+  background: var(--STUDY-NOTES--neon-green);
+  box-shadow: 0 0 8px var(--STUDY-NOTES--neon-green-glow);
+}
+
+/* 折叠箭头 */
+.dark .VPSidebarItem .caret {
+  color: var(--STUDY-NOTES--cyber-text-muted);
+  transition: color 0.15s ease;
+}
+
+.dark .VPSidebarItem:hover .caret {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* ============================================
+ * VPDocOutlineItem - 右侧大纲
+ * ============================================ */
+
+.dark .VPDocAsideOutline {
+  border-left: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+/* 大纲标题 - 不显示 */
+.dark .VPDocAsideOutline .content > .outline-title {
+  display: none;
+}
+
+/* 大纲标题 */
+.dark .VPDocOutlineItem .outline-title {
+  color: var(--STUDY-NOTES--neon-green);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* 大纲链接 */
+.dark .VPDocOutlineItem .outline-link {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 12px;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .VPDocOutlineItem .outline-link:hover {
+  color: #ffffff;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+.dark .VPDocOutlineItem .outline-link.active {
+  color: var(--STUDY-NOTES--neon-green);
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
+}
+
+/* 大纲激活指示器 */
+.dark .VPDocAsideOutline .outline-marker {
+  background: var(--STUDY-NOTES--neon-green);
+  box-shadow: 0 0 6px var(--STUDY-NOTES--neon-green-glow);
+}
+
+/* ============================================
+ * Headings - 标题样式
+ * ============================================ */
+
+.dark .vp-doc h1,
+.dark .vp-doc h2,
+.dark .vp-doc h3,
+.dark .vp-doc h4,
+.dark .vp-doc h5,
+.dark .vp-doc h6 {
+  color: var(--STUDY-NOTES--neon-green);
+  font-family: var(--STUDY-NOTES--font-mono);
+}
+
+/* H1 - 主标题 (Mobile: 28px, Desktop: 40px) */
+.dark .vp-doc h1 {
+  position: relative;
+  font-size: 28px;
+  font-weight: bold;
+  padding-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h1 {
+    font-size: 40px;
+    padding-bottom: 16px;
+  }
+}
+
+.dark .vp-doc h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
+}
+
+/* H2 - 二级标题 (Mobile: 24px, Desktop: 32px) */
+.dark .vp-doc h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 60px;
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h2 {
+    font-size: 32px;
+  }
+}
+
+/* H3 - 三级标题 (Mobile: 20px, Desktop: 24px) */
+.dark .vp-doc h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h3 {
+    font-size: 24px;
+    margin-top: 32px;
+  }
+}
+
+/* H4 - 四级标题 (Mobile: 16px, Desktop: 18px) */
+.dark .vp-doc h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h4 {
+    font-size: 18px;
+  }
+}
+
+/* 锚点链接 */
+.dark .vp-doc .header-anchor {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  opacity: 0;
+  transition: opacity var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc h1:hover .header-anchor,
+.dark .vp-doc h2:hover .header-anchor,
+.dark .vp-doc h3:hover .header-anchor,
+.dark .vp-doc h4:hover .header-anchor {
+  opacity: 1;
+}
+
+.dark .vp-doc .header-anchor:hover {
+  color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Paragraphs - 段落
+ * ============================================ */
+
+.dark .vp-doc p {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.dark .vp-doc strong {
+  color: var(--STUDY-NOTES--neon-green);
+  font-weight: bold;
+}
+
+.dark .vp-doc em {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* ============================================
+ * Links - 链接
+ * ============================================ */
+
+.dark .vp-doc a {
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc a:hover {
+  border-bottom-color: #ffffff;
+}
+
+/* 外部链接图标 */
+.dark .vp-doc a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 0.85em;
+  color: var(--STUDY-NOTES--neon-green-dim);
+  opacity: 0.7;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc a[target="_blank"]:hover::after {
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* ============================================
+ * Code Blocks - 代码块
+ * ============================================ */
+
+.dark .vp-doc div[class*="language-"] {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-radius: 0;
+}
+
+.dark .vp-doc div[class*="language-"] pre {
+  background: black;
+}
+
+/* 语言标签 */
+.dark .vp-doc div[class*="language-"] span.lang {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.dark .vp-doc div[class*="language-"]:hover span.lang {
+  opacity: 1 !important;
+}
+
+/* 行号 */
+.dark .vp-doc div[class*="language-"].line-numbers-mode .line-numbers {
+  border-right: 1px solid var(--STUDY-NOTES--cyber-border);
+  color: var(--STUDY-NOTES--cyber-text-muted);
+}
+
+/* 高亮行 */
+.dark .vp-doc div[class*="language-"] .line.highlighted {
+  background: rgba(0, 255, 159, 0.1);
+}
+
+/* 复制按钮 - 隐藏 */
+.dark .vp-doc div[class*="language-"] button.copy {
+  display: none;
+}
+
+/* ============================================
+ * Code Group - 代码组标签
+ * ============================================ */
+
+.dark .vp-code-group .tabs label {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+
+.dark .vp-code-group .tabs label:hover {
+  color: #ffffff;
+}
+
+.dark .vp-code-group input:checked + label {
+  color: var(--STUDY-NOTES--neon-green);
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
+}
+
+.dark .vp-code-group .tabs {
+  background: transparent;
+  border-bottom: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+/* 行内代码 */
+.dark .vp-doc :not(pre) > code {
+  background: rgba(0, 255, 159, 0.1);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  color: var(--STUDY-NOTES--neon-green);
+  border-radius: 0;
+  padding: 2px 6px;
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 0.9em;
+}
+
+/* ============================================
+ * Blockquotes - 引用块
+ * ============================================ */
+
+.dark .vp-doc blockquote {
+  border-left: 2px solid var(--STUDY-NOTES--neon-green-glow);
+  background: rgba(0, 204, 127, 0.08);
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 0;
+  opacity: 0.8;
+}
+
+.dark .vp-doc blockquote p,
+.dark .vp-doc blockquote li,
+.dark .vp-doc blockquote code {
+  color: var(--STUDY-NOTES--neon-green-glow);
+}
+
+.dark .vp-doc blockquote > p {
+  margin: 0;
+}
+
+.dark .vp-doc blockquote div[class*="language-"] {
+  margin: 8px 0;
+}
+
+.dark .vp-doc blockquote div[class*="language-"] pre {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ============================================
+ * Lists - 列表
+ * ============================================ */
+
+.dark .vp-doc ul,
+.dark .vp-doc ol {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc ul > li::marker,
+.dark .vp-doc ol > li::marker {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc li input[type="checkbox"] {
+  accent-color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Tables - 表格
+ * ============================================ */
+
+.dark .vp-doc table {
+  border-collapse: collapse;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+
+.dark .vp-doc table th,
+.dark .vp-doc table td {
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  padding: 10px 14px;
+}
+
+.dark .vp-doc table th {
+  background: rgba(0, 255, 159, 0.1);
+  color: var(--STUDY-NOTES--neon-green);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dark .vp-doc table td {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc table tr:nth-child(2n) {
+  background: transparent;
+}
+
+.dark .vp-doc table tr:hover td {
+  background: rgba(0, 255, 159, 0.03);
+}
+
+/* ============================================
+ * Custom Containers - 自定义提示框
+ * ============================================ */
+
+.dark .vp-doc .custom-block {
+  border-radius: 0;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+/* Tip - 使用 success 绿色 */
+.dark .vp-doc .custom-block.tip {
+  background: var(--STUDY-NOTES--color-success-soft);
+  border-left-color: var(--STUDY-NOTES--color-success);
+}
+
+.dark .vp-doc .custom-block.tip .custom-block-title {
+  color: var(--STUDY-NOTES--color-success);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.tip p,
+.dark .vp-doc .custom-block.tip li,
+.dark .vp-doc .custom-block.tip code {
+  color: var(--STUDY-NOTES--color-success);
+}
+
+/* Info - 使用 info 蓝色 */
+.dark .vp-doc .custom-block.info {
+  background: var(--STUDY-NOTES--color-info-soft);
+  border-left-color: var(--STUDY-NOTES--color-info);
+}
+
+.dark .vp-doc .custom-block.info .custom-block-title {
+  color: var(--STUDY-NOTES--color-info);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.info p,
+.dark .vp-doc .custom-block.info li,
+.dark .vp-doc .custom-block.info code {
+  color: var(--STUDY-NOTES--color-info);
+}
+
+/* Warning - 使用 warning 橙色 */
+.dark .vp-doc .custom-block.warning {
+  background: var(--STUDY-NOTES--color-warning-soft);
+  border-left-color: var(--STUDY-NOTES--color-warning);
+}
+
+.dark .vp-doc .custom-block.warning .custom-block-title {
+  color: var(--STUDY-NOTES--color-warning);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.warning p,
+.dark .vp-doc .custom-block.warning li,
+.dark .vp-doc .custom-block.warning code {
+  color: var(--STUDY-NOTES--color-warning);
+}
+
+/* Danger - 使用 error 红色 */
+.dark .vp-doc .custom-block.danger {
+  background: var(--STUDY-NOTES--color-error-soft);
+  border-left-color: var(--STUDY-NOTES--color-error);
+}
+
+.dark .vp-doc .custom-block.danger .custom-block-title {
+  color: var(--STUDY-NOTES--color-error);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.danger p,
+.dark .vp-doc .custom-block.danger li,
+.dark .vp-doc .custom-block.danger code {
+  color: var(--STUDY-NOTES--color-error);
+}
+
+/* Details */
+.dark .vp-doc .custom-block.details {
+  background: var(--STUDY-NOTES--cyber-surface);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+.dark .vp-doc .custom-block.details summary {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  cursor: pointer;
+}
+
+.dark .vp-doc .custom-block.details summary:hover {
+  color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Horizontal Rule - 水平线
+ * ============================================ */
+
+.dark .vp-doc hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
+  margin: 32px 0;
+}
+
+/* ============================================
+ * Images - 图片
+ * ============================================ */
+
+.dark .vp-doc img {
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-radius: 0;
+}
+
+/* ============================================
+ * Keyboard - 键盘按键
+ * ============================================ */
+
+.dark .vp-doc kbd {
+  background: var(--STUDY-NOTES--cyber-surface);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-bottom-width: 2px;
+  border-radius: 0;
+  padding: 2px 6px;
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 0.85em;
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* ============================================
+ * VPDocFooter - 文档底部导航
+ * ============================================ */
+
+.dark .VPDocFooter {
+  border-top: none;
+  margin-top: 48px;
+  padding-top: 24px;
+}
+
+.dark .VPDocFooter .prev-next {
+  border-top: 1px solid var(--STUDY-NOTES--cyber-border);
+  padding-top: 24px;
+}
+
+.dark .VPDocFooter .pager-link {
+  background: transparent;
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-radius: 0;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .VPDocFooter .pager-link:hover {
+  border-color: var(--STUDY-NOTES--neon-green-dim);
+  background: var(--STUDY-NOTES--cyber-surface-hover);
+  box-shadow: 0 0 20px var(--STUDY-NOTES--neon-green-glow);
+}
+
+.dark .VPDocFooter .pager-link .desc {
+  color: var(--STUDY-NOTES--neon-green-glow);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dark .VPDocFooter .pager-link .title {
+  color: var(--STUDY-NOTES--neon-green-glow);
+  font-family: var(--STUDY-NOTES--font-mono);
+  transition: all 0.15s ease;
+}
+
+.dark .VPDocFooter .pager-link:hover .title {
+  color: #ffffff;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+.dark .VPDocFooter .pager-link:hover .desc {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* ============================================
+ * VPLastUpdated - 最后更新时间
+ * ============================================ */
+
+.dark .VPLastUpdated {
+  color: var(--STUDY-NOTES--neon-green-glow);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 12px;
+}
+
+/* ============================================
+ * Mobile Menu - 移动端菜单
+ * ============================================ */
+
+/* VPNavBarHamburger 汉堡按钮 - 三条横线 */
+.dark .VPNavBarHamburger .container .top,
+.dark .VPNavBarHamburger .container .middle,
+.dark .VPNavBarHamburger .container .bottom {
+  background-color: var(--STUDY-NOTES--neon-green-dim) !important;
+}
+
+.dark .VPNavBarHamburger:hover .container .top,
+.dark .VPNavBarHamburger:hover .container .middle,
+.dark .VPNavBarHamburger:hover .container .bottom {
+  background-color: var(--STUDY-NOTES--neon-green) !important;
+}
+
+.dark .VPNavScreen {
+  background: rgba(10, 10, 15, 0.98) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  height: 100vh !important;
+  height: 100dvh !important;
+}
+
+/* VPNavScreen 中的所有文本 */
+.dark .VPNavScreenMenuLink {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+  border-bottom: 1px solid var(--STUDY-NOTES--cyber-border) !important;
+  transition: all 0.15s ease;
+}
+
+.dark .VPNavScreenMenuLink:hover {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+/* VPNavScreen 菜单组 - 可折叠按钮 */
+.dark .VPNavScreenMenuGroup .text,
+.dark .VPNavScreenMenuGroup .button,
+.dark .VPNavScreenMenuGroup .button .text,
+.dark .VPNavScreenMenuGroup > .button,
+.dark .VPNavScreenMenuGroup > button,
+.dark .VPNavScreenMenuGroup > button .text {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+}
+
+/* 可折叠按钮的箭头图标 */
+.dark .VPNavScreenMenuGroup .button .vpi-plus,
+.dark .VPNavScreenMenuGroup .button [class*="vpi-"],
+.dark .VPNavScreenMenuGroup > button .vpi-plus,
+.dark .VPNavScreenMenuGroup > button [class*="vpi-"] {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+}
+
+.dark .VPNavScreenMenuGroup .item a,
+.dark .VPNavScreenMenuGroup .items a {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+}
+
+.dark .VPNavScreenMenuGroup .item a:hover,
+.dark .VPNavScreenMenuGroup .items a:hover {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+}
+
+/* VPNavScreen 社交链接 */
+.dark .VPNavScreen .VPSocialLinks a {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+}
+
+.dark .VPNavScreen .VPSocialLinks a:hover {
+  color: #ffffff !important;
+}
+
+/* 移动端侧边栏 - 打开时的背景 */
+.dark .VPSidebar.open {
+  background: rgba(10, 10, 15, 0.98) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ============================================
+ * VPLocalNav - 本地导航（移动端标题栏）
+ * ============================================ */
+
+.dark .VPLocalNav {
+  background: rgba(10, 10, 15, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* VPLocalNav border - 只在移动端显示 */
+.dark .VPLocalNav.has-sidebar {
+  border-bottom: none;
+}
+
+@media (max-width: 959px) {
+  .dark .VPLocalNav.has-sidebar {
+    border-bottom: 1px solid var(--STUDY-NOTES--cyber-border);
+  }
+}
+
+.dark .VPLocalNav .menu-text,
+.dark .VPLocalNav .VPLocalNavOutlineDropdown button,
+.dark .VPLocalNav .VPLocalNavOutlineDropdown .menu-text {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+}
+
+/* VPLocalNav 菜单图标 (vpi-align-left) */
+.dark .VPLocalNav .menu-icon,
+.dark .VPLocalNav .vpi-align-left,
+.dark .VPLocalNav [class*="vpi-"] {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+}
+
+.dark .VPLocalNav .menu:hover .menu-icon,
+.dark .VPLocalNav .menu:hover .vpi-align-left,
+.dark .VPLocalNav .menu:hover [class*="vpi-"] {
+  color: var(--STUDY-NOTES--neon-green) !important;
+}
+
+.dark .VPLocalNav .VPLocalNavOutlineDropdown button:hover {
+  color: var(--STUDY-NOTES--neon-green) !important;
+}
+
+/* 本地导航中的大纲下拉 */
+.dark .VPLocalNavOutlineDropdown .items {
+  background: var(--STUDY-NOTES--cyber-bg-start) !important;
+  border: 1px solid var(--STUDY-NOTES--cyber-border) !important;
+}
+
+.dark .VPLocalNavOutlineDropdown .outline-link {
+  color: var(--STUDY-NOTES--neon-green-dim) !important;
+  font-family: var(--STUDY-NOTES--font-mono) !important;
+}
+
+.dark .VPLocalNavOutlineDropdown .outline-link:hover {
+  color: #ffffff !important;
+  text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
+}
+
+.dark .VPLocalNavOutlineDropdown .outline-link.active {
+  color: var(--STUDY-NOTES--neon-green) !important;
+}
+
+/* ============================================
+ * No Sidebar Layout - 无侧边栏时的布局
+ * 当页面没有配置 sidebar 时，内容区居中显示
+ * ============================================ */
+
+/* VitePress 在没有 sidebar 时不会添加 .has-sidebar 类 */
+/* 此时内容区应该居中，保持合适的阅读宽度 */
+.dark .VPDoc:not(.has-sidebar) .container {
+  max-width: var(--STUDY-NOTES--max-width-prose);
+  margin: 0 auto;
+}
+
+.dark .VPDoc:not(.has-sidebar) .content {
+  padding-left: var(--STUDY-NOTES--spacing-4);
+  padding-right: var(--STUDY-NOTES--spacing-4);
+}
+
+@media (min-width: 768px) {
+  .dark .VPDoc:not(.has-sidebar) .content {
+    padding-left: var(--STUDY-NOTES--spacing-8);
+    padding-right: var(--STUDY-NOTES--spacing-8);
+  }
+}
+
+/* 无 sidebar 时隐藏 VPLocalNav 的菜单按钮 */
+.dark .VPLocalNav:not(.has-sidebar) .menu {
+  display: none;
+}
+
+/* ============================================
+ * Scrollbar - 滚动条
+ * ============================================ */
+
+.dark .VPSidebar::-webkit-scrollbar,
+.dark .VPDocAsideOutline::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dark .VPSidebar::-webkit-scrollbar-track,
+.dark .VPDocAsideOutline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark .VPSidebar::-webkit-scrollbar-thumb,
+.dark .VPDocAsideOutline::-webkit-scrollbar-thumb {
+  background: var(--STUDY-NOTES--cyber-border);
+  border-radius: 2px;
+}
+
+.dark .VPSidebar::-webkit-scrollbar-thumb:hover,
+.dark .VPDocAsideOutline::-webkit-scrollbar-thumb:hover {
+  background: var(--STUDY-NOTES--neon-green-dim);
+}

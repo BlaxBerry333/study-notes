@@ -1,0 +1,111 @@
+/**
+ * Base styles - Chen's Study Notes
+ * Font loading, resets, and Safari compatibility
+ */
+
+/* ============================================
+ * Google Fonts
+ * ============================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+/* ============================================
+ * Force Dark Mode
+ * VitePress appearance: false disables toggle,
+ * we manually add .dark class via JS
+ * ============================================ */
+
+html {
+  color-scheme: dark;
+}
+
+/* ============================================
+ * Font Rendering
+ * ============================================ */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================
+ * Safari/iOS Compatibility
+ * ============================================ */
+
+/* Prevent iOS text size adjustment */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Disable iOS double-tap zoom on interactive elements */
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+/* Minimum font size to prevent iOS zoom on focus */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Safe area insets for notched devices */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+/* Smooth scrolling with touch */
+.scrollable {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ============================================
+ * Reduced Motion Support
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+ * Focus Styles
+ * ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
+.dark :focus-visible {
+  outline-color: var(--STUDY-NOTES--neon-green);
+  box-shadow: 0 0 10px var(--STUDY-NOTES--neon-green-glow);
+}
+
+/* ============================================
+ * Selection
+ * ============================================ */
+
+::selection {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-text-1);
+}
+
+.dark ::selection {
+  background: rgba(0, 255, 159, 0.3);
+}

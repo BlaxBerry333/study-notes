@@ -1,0 +1,19 @@
+*.vue linguist-vendored=false
+*.vue linguist-generated=false
+*.vue linguist-documentation=false
+*.vue linguist-detectable=true
+
+*.ts linguist-vendored=false
+*.ts linguist-generated=false
+*.ts linguist-documentation=false
+*.ts linguist-detectable=true
+
+*.sh linguist-vendored=false
+*.sh linguist-generated=false
+*.sh linguist-documentation=false
+*.sh linguist-detectable=true
+
+# *.md linguist-vendored=false
+# *.md linguist-generated=false
+# *.md linguist-documentation=false
+# *.md linguist-detectable=true

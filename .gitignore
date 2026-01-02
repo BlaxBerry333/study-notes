@@ -1,0 +1,44 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+.astro/
+*.tsbuildinfo
+next-env.d.ts
+
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea
+*.suo
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Cache
+*.cache
+
+# AI
+CLAUDE.md
+.claude/
+_*.md
