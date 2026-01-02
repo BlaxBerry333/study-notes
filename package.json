@@ -17,7 +17,7 @@
     "check": "biome check . && cspell \"**/*.{ts,vue,md,json}\"",
     "check:fix": "biome check --write .",
     "check:spell": "cspell \"**/*.{ts,vue,md,json}\"",
-    "format": "biome format --write .",
+    "format": "biome check --write --linter-enabled=false .",
     "prepare": "husky"
   },
   "lint-staged": {
