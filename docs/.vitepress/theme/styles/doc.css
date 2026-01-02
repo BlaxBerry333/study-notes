@@ -323,9 +323,11 @@
 }
 
 /* 大纲激活指示器 */
+/* 因为隐藏了 .outline-title (line-height: 32px)，需要用 margin-top 抵消 VitePress JS 中硬编码的偏移 */
 .dark .VPDocAsideOutline .outline-marker {
   background: var(--STUDY-NOTES--neon-green);
   box-shadow: 0 0 6px var(--STUDY-NOTES--neon-green-glow);
+  margin-top: -32px;
 }
 
 /* ============================================
