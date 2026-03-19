@@ -4,17 +4,17 @@ import { withBase } from 'vitepress'
 defineProps<{
   title: string
   link: string
-  restricted?: boolean
+  draft?: boolean
 }>()
 </script>
 
 <template>
-  <component :is="restricted ? 'div' : 'a'" :href="restricted ? undefined : withBase(link)" class="STUDY-NOTES--card"
-    :class="{ 'STUDY-NOTES--card-restricted': restricted }">
+  <component :is="draft ? 'div' : 'a'" :href="draft ? undefined : withBase(link)" class="STUDY-NOTES--card"
+    :class="{ 'STUDY-NOTES--card-draft': draft }">
     <div class="STUDY-NOTES--card-content">
-      <h3 class="STUDY-NOTES--card-title">{{ restricted ? '[CLASSIFIED]' : `[${title.toUpperCase()}]` }}</h3>
-      <p class="STUDY-NOTES--card-subtitle">{{ restricted ? 'ACCESS DENIED' : 'ACCESSIBLE' }}</p>
-      <p v-if="restricted" class="STUDY-NOTES--card-desc">CLEARANCE LEVEL INSUFFICIENT</p>
+      <h3 class="STUDY-NOTES--card-title">{{ draft ? '[CLASSIFIED]' : `[${title.toUpperCase()}]` }}</h3>
+      <p class="STUDY-NOTES--card-subtitle">{{ draft ? 'ACCESS DENIED' : 'ACCESSIBLE' }}</p>
+      <p v-if="draft" class="STUDY-NOTES--card-desc">CLEARANCE LEVEL INSUFFICIENT</p>
     </div>
     <div class="STUDY-NOTES--card-footer">
       <span class="STUDY-NOTES--card-arrow">[ENGAGE >>]</span>
@@ -29,7 +29,7 @@ defineProps<{
 
 .STUDY-NOTES--card {
   position: relative;
-  background: rgba(10, 10, 15, 0.6);
+  background: var(--STUDY-NOTES--cyber-surface-dim);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0;
@@ -43,7 +43,7 @@ defineProps<{
   cursor: pointer;
   width: 280px;
   opacity: 0.6;
-  transition: all var(--STUDY-NOTES--duration-normal, 300ms) var(--STUDY-NOTES--ease-default, ease);
+  transition: all var(--STUDY-NOTES--duration-normal) var(--STUDY-NOTES--ease-default);
 }
 
 /* ============================================
@@ -62,9 +62,9 @@ defineProps<{
   font-size: 16px;
   font-weight: bold;
   margin: 0 0 4px 0;
-  color: var(--STUDY-NOTES--neon-green-dim, #00CC7F);
+  color: var(--STUDY-NOTES--neon-green-dim);
   text-shadow: none;
-  transition: all var(--STUDY-NOTES--duration-normal, 300ms) var(--STUDY-NOTES--ease-default, ease);
+  transition: all var(--STUDY-NOTES--duration-normal) var(--STUDY-NOTES--ease-default);
 }
 
 .STUDY-NOTES--card-subtitle {
@@ -112,7 +112,7 @@ defineProps<{
   }
 
   .STUDY-NOTES--card:hover .STUDY-NOTES--card-title {
-    color: #ffffff;
+    color: var(--STUDY-NOTES--cyber-text-primary);
     text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
   }
 }
@@ -124,41 +124,41 @@ defineProps<{
 }
 
 .STUDY-NOTES--card:active .STUDY-NOTES--card-title {
-  color: #ffffff;
+  color: var(--STUDY-NOTES--cyber-text-primary);
   text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
 }
 
 /* ============================================
- * 受限状态 - Restricted Access (40K Style)
+ * 草稿状态 - Draft (40K Style)
  * ============================================ */
 
-.STUDY-NOTES--card-restricted {
-  outline-color: var(--STUDY-NOTES--neon-red, #ff3333);
-  color: var(--STUDY-NOTES--neon-red, #ff3333);
+.STUDY-NOTES--card-draft {
+  outline-color: var(--STUDY-NOTES--neon-red);
+  color: var(--STUDY-NOTES--neon-red);
   cursor: not-allowed;
 }
 
-.STUDY-NOTES--card-restricted .STUDY-NOTES--card-title {
-  color: var(--STUDY-NOTES--neon-red-dim, #cc3333);
+.STUDY-NOTES--card-draft .STUDY-NOTES--card-title {
+  color: var(--STUDY-NOTES--neon-red-dim);
 }
 
 @media (hover: hover) {
-  .STUDY-NOTES--card-restricted:hover {
-    box-shadow: 0 0 25px rgba(255, 51, 51, 0.4);
+  .STUDY-NOTES--card-draft:hover {
+    box-shadow: 0 0 25px var(--STUDY-NOTES--neon-red-glow);
   }
 
-  .STUDY-NOTES--card-restricted:hover .STUDY-NOTES--card-title {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 51, 51, 0.8), 0 0 20px rgba(255, 51, 51, 0.5);
+  .STUDY-NOTES--card-draft:hover .STUDY-NOTES--card-title {
+    color: var(--STUDY-NOTES--cyber-text-primary);
+    text-shadow: var(--STUDY-NOTES--text-glow-red-sm);
   }
 }
 
-.STUDY-NOTES--card-restricted:active {
-  box-shadow: 0 0 25px rgba(255, 51, 51, 0.4);
+.STUDY-NOTES--card-draft:active {
+  box-shadow: 0 0 25px var(--STUDY-NOTES--neon-red-glow);
 }
 
-.STUDY-NOTES--card-restricted:active .STUDY-NOTES--card-title {
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 51, 51, 0.8), 0 0 20px rgba(255, 51, 51, 0.5);
+.STUDY-NOTES--card-draft:active .STUDY-NOTES--card-title {
+  color: var(--STUDY-NOTES--cyber-text-primary);
+  text-shadow: var(--STUDY-NOTES--text-glow-red-sm);
 }
 </style>

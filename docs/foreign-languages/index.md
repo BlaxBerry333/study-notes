@@ -1,5 +1,5 @@
 ---
 layout: custom-category
-title: Japanese
+title: Foreign Languages
 draft: true
 ---

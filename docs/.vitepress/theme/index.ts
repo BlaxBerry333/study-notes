@@ -6,7 +6,8 @@ import DefaultTheme from 'vitepress/theme'
 // Styles
 import './styles/vars.css'
 import './styles/base.css'
-import './styles/doc.css'
+import './styles/doc-layout.css'
+import './styles/doc-content.css'
 
 // Custom Layout
 import CustomLayout from './layouts/CustomLayout.vue'

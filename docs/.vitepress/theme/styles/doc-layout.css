@@ -16,6 +16,15 @@
   --vp-c-bg-soft: var(--STUDY-NOTES--cyber-surface);
   --vp-c-bg-alt: transparent;
   --vp-c-bg-elv: var(--STUDY-NOTES--cyber-surface);
+
+  /* doc.css 专属变量 */
+  --STUDY-NOTES--nav-bg: rgba(10, 10, 15, 0.85);
+  --STUDY-NOTES--overlay-bg: rgba(10, 10, 15, 0.98);
+  --STUDY-NOTES--code-block-bg: rgba(10, 10, 15, 0.8);
+  --STUDY-NOTES--green-tint-strong: rgba(0, 255, 159, 0.1);
+  --STUDY-NOTES--green-tint-light: rgba(0, 255, 159, 0.08);
+  --STUDY-NOTES--green-tint-subtle: rgba(0, 255, 159, 0.03);
+  --STUDY-NOTES--blockquote-bg: rgba(0, 204, 127, 0.08);
 }
 
 /* 主体背景 - 纯色 */
@@ -44,7 +53,7 @@
  * ============================================ */
 
 .dark .VPNav {
-  background: rgba(10, 10, 15, 0.85);
+  background: var(--STUDY-NOTES--nav-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -101,11 +110,11 @@
   font-family: var(--STUDY-NOTES--font-mono);
   font-size: 13px;
   letter-spacing: 0.02em;
-  transition: all 0.15s ease;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
 }
 
 .dark .VPNavBarMenuLink:hover {
-  color: #ffffff;
+  color: var(--STUDY-NOTES--cyber-text-primary);
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
@@ -122,13 +131,13 @@
   font-family: var(--STUDY-NOTES--font-mono) !important;
   font-size: 13px !important;
   letter-spacing: 0.02em;
-  transition: all 0.15s ease !important;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default) !important;
 }
 
 .dark .VPNavBarMenuGroup:hover .button .text,
 .dark .VPNavBarMenuGroup:hover > button > .text,
 .dark .VPNavBar .VPNavBarMenuGroup:hover .text {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
 }
 
@@ -146,33 +155,29 @@
 
 /* 下拉菜单链接项 */
 .dark .VPMenu .VPMenuLink .link,
-.dark .VPNavBarMenuGroup .VPMenu a,
 .dark .VPMenu a {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
   font-family: var(--STUDY-NOTES--font-mono) !important;
   font-size: 13px !important;
-  transition: all 0.15s ease !important;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default) !important;
 }
 
 .dark .VPMenu .VPMenuLink:hover .link,
 .dark .VPMenu .VPMenuLink .link:hover,
-.dark .VPNavBarMenuGroup .VPMenu a:hover,
 .dark .VPMenu a:hover {
-  color: #ffffff !important;
-  background: rgba(0, 255, 159, 0.08) !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
+  background: var(--STUDY-NOTES--green-tint-light) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
 }
 
 .dark .VPMenu .VPMenuLink.active .link,
-.dark .VPNavBarMenuGroup .VPMenu a.active,
 .dark .VPMenu a.active {
   color: var(--STUDY-NOTES--neon-green) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green-sm) !important;
 }
 
 /* 下拉菜单分组标题 */
-.dark .VPMenu .VPMenuGroup .title,
-.dark .VPNavBarMenuGroup .VPMenu .VPMenuGroup .title {
+.dark .VPMenu .VPMenuGroup .title {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
   font-family: var(--STUDY-NOTES--font-mono) !important;
   font-size: 11px !important;
@@ -196,13 +201,13 @@
 .dark .VPNavBarSocialLinks a,
 .dark .social-links a {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
-  transition: all 0.15s ease !important;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default) !important;
 }
 
 .dark .VPSocialLinks a:hover,
 .dark .VPNavBarSocialLinks a:hover,
 .dark .social-links a:hover {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
 }
 
@@ -230,37 +235,32 @@
   font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: all 0.15s ease;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
 }
 
 .dark .VPSidebarItem.level-0 > .item:hover > .text {
-  color: #ffffff;
+  color: var(--STUDY-NOTES--cyber-text-primary);
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
 /* 侧边栏链接 - VPLink .link .text 结构 */
 .dark .VPSidebarItem .item .VPLink .text,
-.dark .VPSidebarItem .item .link .text,
-.dark .VPSidebarItem.level-1 > .item > .link > .text,
-.dark .VPSidebarItem.level-2 > .item > .link > .text {
+.dark .VPSidebarItem .item .link .text {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
   font-family: var(--STUDY-NOTES--font-mono) !important;
   font-size: 13px !important;
-  transition: all 0.15s ease !important;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default) !important;
 }
 
 .dark .VPSidebarItem .item .VPLink:hover .text,
-.dark .VPSidebarItem .item .link:hover .text,
-.dark .VPSidebarItem.level-1 > .item > .link:hover > .text,
-.dark .VPSidebarItem.level-2 > .item > .link:hover > .text {
-  color: #ffffff !important;
+.dark .VPSidebarItem .item .link:hover .text {
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
 }
 
 /* 当前激活的链接 */
 .dark .VPSidebarItem.is-active .item .VPLink .text,
-.dark .VPSidebarItem.is-active .item .link .text,
-.dark .VPSidebarItem.is-active > .item > .link > .text {
+.dark .VPSidebarItem.is-active .item .link .text {
   color: var(--STUDY-NOTES--neon-green) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green-sm) !important;
 }
@@ -274,7 +274,7 @@
 /* 折叠箭头 */
 .dark .VPSidebarItem .caret {
   color: var(--STUDY-NOTES--cyber-text-muted);
-  transition: color 0.15s ease;
+  transition: color var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
 }
 
 .dark .VPSidebarItem:hover .caret {
@@ -287,11 +287,6 @@
 
 .dark .VPDocAsideOutline {
   border-left: 1px solid var(--STUDY-NOTES--cyber-border);
-}
-
-/* 大纲标题 - 不显示 */
-.dark .VPDocAsideOutline .content > .outline-title {
-  display: none;
 }
 
 /* 大纲标题 */
@@ -313,7 +308,7 @@
 }
 
 .dark .VPDocOutlineItem .outline-link:hover {
-  color: #ffffff;
+  color: var(--STUDY-NOTES--cyber-text-primary);
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
@@ -323,463 +318,9 @@
 }
 
 /* 大纲激活指示器 */
-/* 因为隐藏了 .outline-title (line-height: 32px)，需要用 margin-top 抵消 VitePress JS 中硬编码的偏移 */
 .dark .VPDocAsideOutline .outline-marker {
   background: var(--STUDY-NOTES--neon-green);
   box-shadow: 0 0 6px var(--STUDY-NOTES--neon-green-glow);
-  margin-top: -32px;
-}
-
-/* ============================================
- * Headings - 标题样式
- * ============================================ */
-
-.dark .vp-doc h1,
-.dark .vp-doc h2,
-.dark .vp-doc h3,
-.dark .vp-doc h4,
-.dark .vp-doc h5,
-.dark .vp-doc h6 {
-  color: var(--STUDY-NOTES--neon-green);
-  font-family: var(--STUDY-NOTES--font-mono);
-}
-
-/* H1 - 主标题 (Mobile: 28px, Desktop: 40px) */
-.dark .vp-doc h1 {
-  position: relative;
-  font-size: 28px;
-  font-weight: bold;
-  padding-bottom: 12px;
-  letter-spacing: 0.02em;
-}
-
-@media (min-width: 768px) {
-  .dark .vp-doc h1 {
-    font-size: 40px;
-    padding-bottom: 16px;
-  }
-}
-
-.dark .vp-doc h1::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
-}
-
-/* H2 - 二级标题 (Mobile: 24px, Desktop: 32px) */
-.dark .vp-doc h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 60px;
-  padding-top: 0;
-  border-top: none;
-}
-
-@media (min-width: 768px) {
-  .dark .vp-doc h2 {
-    font-size: 32px;
-  }
-}
-
-/* H3 - 三级标题 (Mobile: 20px, Desktop: 24px) */
-.dark .vp-doc h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 24px;
-}
-
-@media (min-width: 768px) {
-  .dark .vp-doc h3 {
-    font-size: 24px;
-    margin-top: 32px;
-  }
-}
-
-/* H4 - 四级标题 (Mobile: 16px, Desktop: 18px) */
-.dark .vp-doc h4 {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--STUDY-NOTES--neon-green-dim);
-}
-
-@media (min-width: 768px) {
-  .dark .vp-doc h4 {
-    font-size: 18px;
-  }
-}
-
-/* 锚点链接 */
-.dark .vp-doc .header-anchor {
-  color: var(--STUDY-NOTES--neon-green-dim);
-  opacity: 0;
-  transition: opacity var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
-}
-
-.dark .vp-doc h1:hover .header-anchor,
-.dark .vp-doc h2:hover .header-anchor,
-.dark .vp-doc h3:hover .header-anchor,
-.dark .vp-doc h4:hover .header-anchor {
-  opacity: 1;
-}
-
-.dark .vp-doc .header-anchor:hover {
-  color: var(--STUDY-NOTES--neon-green);
-}
-
-/* ============================================
- * Paragraphs - 段落
- * ============================================ */
-
-.dark .vp-doc p {
-  color: var(--STUDY-NOTES--neon-green-dim);
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.dark .vp-doc strong {
-  color: var(--STUDY-NOTES--neon-green);
-  font-weight: bold;
-}
-
-.dark .vp-doc em {
-  color: var(--STUDY-NOTES--neon-green-dim);
-}
-
-/* ============================================
- * Links - 链接
- * ============================================ */
-
-.dark .vp-doc a {
-  color: #ffffff;
-  text-decoration: none;
-  text-shadow: var(--STUDY-NOTES--text-glow-green);
-  border-bottom: 1px solid transparent;
-  transition: border-bottom-color var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
-}
-
-.dark .vp-doc a:hover {
-  border-bottom-color: #ffffff;
-}
-
-/* 外部链接图标 */
-.dark .vp-doc a[target="_blank"]::after {
-  content: " ↗";
-  font-size: 0.85em;
-  color: var(--STUDY-NOTES--neon-green-dim);
-  opacity: 0.7;
-  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
-}
-
-.dark .vp-doc a[target="_blank"]:hover::after {
-  color: #ffffff;
-  opacity: 1;
-}
-
-/* ============================================
- * Code Blocks - 代码块
- * ============================================ */
-
-.dark .vp-doc div[class*="language-"] {
-  background: rgba(10, 10, 15, 0.8);
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-  border-radius: 0;
-}
-
-.dark .vp-doc div[class*="language-"] pre {
-  background: black;
-}
-
-/* 语言标签 */
-.dark .vp-doc div[class*="language-"] span.lang {
-  color: var(--STUDY-NOTES--neon-green-dim);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.2s ease;
-}
-
-.dark .vp-doc div[class*="language-"]:hover span.lang {
-  opacity: 1 !important;
-}
-
-/* 行号 */
-.dark .vp-doc div[class*="language-"].line-numbers-mode .line-numbers {
-  border-right: 1px solid var(--STUDY-NOTES--cyber-border);
-  color: var(--STUDY-NOTES--cyber-text-muted);
-}
-
-/* 高亮行 */
-.dark .vp-doc div[class*="language-"] .line.highlighted {
-  background: rgba(0, 255, 159, 0.1);
-}
-
-/* 复制按钮 - 隐藏 */
-.dark .vp-doc div[class*="language-"] button.copy {
-  display: none;
-}
-
-/* ============================================
- * Code Group - 代码组标签
- * ============================================ */
-
-.dark .vp-code-group .tabs label {
-  color: var(--STUDY-NOTES--neon-green-dim);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-size: 12px;
-  transition: all 0.15s ease;
-}
-
-.dark .vp-code-group .tabs label:hover {
-  color: #ffffff;
-}
-
-.dark .vp-code-group input:checked + label {
-  color: var(--STUDY-NOTES--neon-green);
-  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
-}
-
-.dark .vp-code-group .tabs {
-  background: transparent;
-  border-bottom: 1px solid var(--STUDY-NOTES--cyber-border);
-}
-
-/* 行内代码 */
-.dark .vp-doc :not(pre) > code {
-  background: rgba(0, 255, 159, 0.1);
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-  color: var(--STUDY-NOTES--neon-green);
-  border-radius: 0;
-  padding: 2px 6px;
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-size: 0.9em;
-}
-
-/* ============================================
- * Blockquotes - 引用块
- * ============================================ */
-
-.dark .vp-doc blockquote {
-  border-left: 2px solid var(--STUDY-NOTES--neon-green-glow);
-  background: rgba(0, 204, 127, 0.08);
-  padding: 12px 16px;
-  margin: 16px 0;
-  border-radius: 0;
-  opacity: 0.8;
-}
-
-.dark .vp-doc blockquote p,
-.dark .vp-doc blockquote li,
-.dark .vp-doc blockquote code {
-  color: var(--STUDY-NOTES--neon-green-glow);
-}
-
-.dark .vp-doc blockquote > p {
-  margin: 0;
-}
-
-.dark .vp-doc blockquote div[class*="language-"] {
-  margin: 8px 0;
-}
-
-.dark .vp-doc blockquote div[class*="language-"] pre {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-/* ============================================
- * Lists - 列表
- * ============================================ */
-
-.dark .vp-doc ul,
-.dark .vp-doc ol {
-  color: var(--STUDY-NOTES--neon-green-dim);
-}
-
-.dark .vp-doc ul > li::marker,
-.dark .vp-doc ol > li::marker {
-  color: var(--STUDY-NOTES--neon-green-dim);
-}
-
-.dark .vp-doc li input[type="checkbox"] {
-  accent-color: var(--STUDY-NOTES--neon-green);
-}
-
-/* ============================================
- * Tables - 表格
- * ============================================ */
-
-.dark .vp-doc table {
-  border-collapse: collapse;
-  width: 100%;
-  display: block;
-  overflow-x: auto;
-}
-
-.dark .vp-doc table th,
-.dark .vp-doc table td {
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-  padding: 10px 14px;
-}
-
-.dark .vp-doc table th {
-  background: rgba(0, 255, 159, 0.1);
-  color: var(--STUDY-NOTES--neon-green);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.dark .vp-doc table td {
-  color: var(--STUDY-NOTES--neon-green-dim);
-}
-
-.dark .vp-doc table tr:nth-child(2n) {
-  background: transparent;
-}
-
-.dark .vp-doc table tr:hover td {
-  background: rgba(0, 255, 159, 0.03);
-}
-
-/* ============================================
- * Custom Containers - 自定义提示框
- * ============================================ */
-
-.dark .vp-doc .custom-block {
-  border-radius: 0;
-  border-left-width: 2px;
-  border-left-style: solid;
-}
-
-/* Tip - 使用 success 绿色 */
-.dark .vp-doc .custom-block.tip {
-  background: var(--STUDY-NOTES--color-success-soft);
-  border-left-color: var(--STUDY-NOTES--color-success);
-}
-
-.dark .vp-doc .custom-block.tip .custom-block-title {
-  color: var(--STUDY-NOTES--color-success);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-weight: bold;
-}
-
-.dark .vp-doc .custom-block.tip p,
-.dark .vp-doc .custom-block.tip li,
-.dark .vp-doc .custom-block.tip code {
-  color: var(--STUDY-NOTES--color-success);
-}
-
-/* Info - 使用 info 蓝色 */
-.dark .vp-doc .custom-block.info {
-  background: var(--STUDY-NOTES--color-info-soft);
-  border-left-color: var(--STUDY-NOTES--color-info);
-}
-
-.dark .vp-doc .custom-block.info .custom-block-title {
-  color: var(--STUDY-NOTES--color-info);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-weight: bold;
-}
-
-.dark .vp-doc .custom-block.info p,
-.dark .vp-doc .custom-block.info li,
-.dark .vp-doc .custom-block.info code {
-  color: var(--STUDY-NOTES--color-info);
-}
-
-/* Warning - 使用 warning 橙色 */
-.dark .vp-doc .custom-block.warning {
-  background: var(--STUDY-NOTES--color-warning-soft);
-  border-left-color: var(--STUDY-NOTES--color-warning);
-}
-
-.dark .vp-doc .custom-block.warning .custom-block-title {
-  color: var(--STUDY-NOTES--color-warning);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-weight: bold;
-}
-
-.dark .vp-doc .custom-block.warning p,
-.dark .vp-doc .custom-block.warning li,
-.dark .vp-doc .custom-block.warning code {
-  color: var(--STUDY-NOTES--color-warning);
-}
-
-/* Danger - 使用 error 红色 */
-.dark .vp-doc .custom-block.danger {
-  background: var(--STUDY-NOTES--color-error-soft);
-  border-left-color: var(--STUDY-NOTES--color-error);
-}
-
-.dark .vp-doc .custom-block.danger .custom-block-title {
-  color: var(--STUDY-NOTES--color-error);
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-weight: bold;
-}
-
-.dark .vp-doc .custom-block.danger p,
-.dark .vp-doc .custom-block.danger li,
-.dark .vp-doc .custom-block.danger code {
-  color: var(--STUDY-NOTES--color-error);
-}
-
-/* Details */
-.dark .vp-doc .custom-block.details {
-  background: var(--STUDY-NOTES--cyber-surface);
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-}
-
-.dark .vp-doc .custom-block.details summary {
-  color: var(--STUDY-NOTES--neon-green-dim);
-  font-family: var(--STUDY-NOTES--font-mono);
-  cursor: pointer;
-}
-
-.dark .vp-doc .custom-block.details summary:hover {
-  color: var(--STUDY-NOTES--neon-green);
-}
-
-/* ============================================
- * Horizontal Rule - 水平线
- * ============================================ */
-
-.dark .vp-doc hr {
-  border: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
-  margin: 32px 0;
-}
-
-/* ============================================
- * Images - 图片
- * ============================================ */
-
-.dark .vp-doc img {
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-  border-radius: 0;
-}
-
-/* ============================================
- * Keyboard - 键盘按键
- * ============================================ */
-
-.dark .vp-doc kbd {
-  background: var(--STUDY-NOTES--cyber-surface);
-  border: 1px solid var(--STUDY-NOTES--cyber-border);
-  border-bottom-width: 2px;
-  border-radius: 0;
-  padding: 2px 6px;
-  font-family: var(--STUDY-NOTES--font-mono);
-  font-size: 0.85em;
-  color: var(--STUDY-NOTES--neon-green-dim);
 }
 
 /* ============================================
@@ -821,11 +362,11 @@
 .dark .VPDocFooter .pager-link .title {
   color: var(--STUDY-NOTES--neon-green-glow);
   font-family: var(--STUDY-NOTES--font-mono);
-  transition: all 0.15s ease;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
 }
 
 .dark .VPDocFooter .pager-link:hover .title {
-  color: #ffffff;
+  color: var(--STUDY-NOTES--cyber-text-primary);
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
@@ -861,7 +402,7 @@
 }
 
 .dark .VPNavScreen {
-  background: rgba(10, 10, 15, 0.98) !important;
+  background: var(--STUDY-NOTES--overlay-bg) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   height: 100vh !important;
@@ -873,29 +414,24 @@
   color: var(--STUDY-NOTES--neon-green-dim) !important;
   font-family: var(--STUDY-NOTES--font-mono) !important;
   border-bottom: 1px solid var(--STUDY-NOTES--cyber-border) !important;
-  transition: all 0.15s ease;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
 }
 
 .dark .VPNavScreenMenuLink:hover {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
 /* VPNavScreen 菜单组 - 可折叠按钮 */
 .dark .VPNavScreenMenuGroup .text,
 .dark .VPNavScreenMenuGroup .button,
-.dark .VPNavScreenMenuGroup .button .text,
-.dark .VPNavScreenMenuGroup > .button,
-.dark .VPNavScreenMenuGroup > button,
-.dark .VPNavScreenMenuGroup > button .text {
+.dark .VPNavScreenMenuGroup > button {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
   font-family: var(--STUDY-NOTES--font-mono) !important;
 }
 
 /* 可折叠按钮的箭头图标 */
-.dark .VPNavScreenMenuGroup .button .vpi-plus,
 .dark .VPNavScreenMenuGroup .button [class*="vpi-"],
-.dark .VPNavScreenMenuGroup > button .vpi-plus,
 .dark .VPNavScreenMenuGroup > button [class*="vpi-"] {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
 }
@@ -908,7 +444,7 @@
 
 .dark .VPNavScreenMenuGroup .item a:hover,
 .dark .VPNavScreenMenuGroup .items a:hover {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green);
 }
 
@@ -918,12 +454,12 @@
 }
 
 .dark .VPNavScreen .VPSocialLinks a:hover {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
 }
 
 /* 移动端侧边栏 - 打开时的背景 */
 .dark .VPSidebar.open {
-  background: rgba(10, 10, 15, 0.98) !important;
+  background: var(--STUDY-NOTES--overlay-bg) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -933,7 +469,7 @@
  * ============================================ */
 
 .dark .VPLocalNav {
-  background: rgba(10, 10, 15, 0.85) !important;
+  background: var(--STUDY-NOTES--nav-bg) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -958,13 +494,11 @@
 
 /* VPLocalNav 菜单图标 (vpi-align-left) */
 .dark .VPLocalNav .menu-icon,
-.dark .VPLocalNav .vpi-align-left,
 .dark .VPLocalNav [class*="vpi-"] {
   color: var(--STUDY-NOTES--neon-green-dim) !important;
 }
 
 .dark .VPLocalNav .menu:hover .menu-icon,
-.dark .VPLocalNav .menu:hover .vpi-align-left,
 .dark .VPLocalNav .menu:hover [class*="vpi-"] {
   color: var(--STUDY-NOTES--neon-green) !important;
 }
@@ -985,7 +519,7 @@
 }
 
 .dark .VPLocalNavOutlineDropdown .outline-link:hover {
-  color: #ffffff !important;
+  color: var(--STUDY-NOTES--cyber-text-primary) !important;
   text-shadow: var(--STUDY-NOTES--text-glow-green) !important;
 }
 

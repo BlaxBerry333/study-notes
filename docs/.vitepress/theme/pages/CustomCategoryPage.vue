@@ -2,7 +2,7 @@
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useData, useRoute, useRouter, withBase } from 'vitepress'
 import ActionButton from '../components/ActionButton.vue'
-import ModuleCard from '../components/ModuleCard.vue'
+import CategoryCard from '../components/CategoryCard.vue'
 import NeonDivider from '../components/NeonDivider.vue'
 import SpeechBubble from '../components/SpeechBubble.vue'
 import { data as categoryModulesData } from '../composables/useCategoryModules.data'
@@ -43,7 +43,7 @@ function goHome() {
 
 // Text constants
 const TEXT = {
-  RESTRICTED: {
+  DRAFT: {
     TITLE: 'CLASSIFIED',
     SPEECH: ['ACCESS DENIED.', 'CLEARANCE LEVEL INSUFFICIENT.'],
   },
@@ -54,8 +54,28 @@ const TEXT = {
 
 // Get data from frontmatter
 const title = computed(() => frontmatter.value.title || 'UNTITLED')
-const description = computed(() => frontmatter.value.description || '')
-const restricted = computed(() => frontmatter.value.restricted === true)
+const draft = computed(() => frontmatter.value.draft === true)
+
+// Breadcrumb navigation from URL path
+const breadcrumbs = computed(() => {
+  let currentPath = route.path
+  const basePrefix = base.value.endsWith('/') ? base.value.slice(0, -1) : base.value
+  if (basePrefix !== '' && currentPath.startsWith(basePrefix)) {
+    currentPath = currentPath.slice(basePrefix.length)
+  }
+  const segments = currentPath.split('/').filter(Boolean)
+  const items: { label: string; href: string }[] = [
+    { label: 'HOME', href: withBase('/') },
+  ]
+  for (let i = 0; i < segments.length - 1; i++) {
+    const path = '/' + segments.slice(0, i + 1).join('/') + '/'
+    items.push({
+      label: segments[i].replaceAll('-', ' ').toUpperCase(),
+      href: withBase(path),
+    })
+  }
+  return items
+})
 
 // Auto-detect modules from data loader based on current path
 const modules = computed(() => {
@@ -73,20 +93,20 @@ const modules = computed(() => {
   return categoryModulesData[currentPath] || []
 })
 
-// Check if showing state page (empty or restricted)
-const isStatePage = computed(() => restricted.value || modules.value.length === 0)
+// Check if showing state page (empty or draft)
+const isStatePage = computed(() => draft.value || modules.value.length === 0)
 
 </script>
 
 <template>
-  <!-- Restricted State -->
-  <div v-if="restricted" class="STUDY-NOTES--category-page STUDY-NOTES--category-state">
+  <!-- Draft State -->
+  <div v-if="draft" class="STUDY-NOTES--category-page STUDY-NOTES--category-state">
     <div class="STUDY-NOTES--state-container">
-      <h1 class="STUDY-NOTES--state-code STUDY-NOTES--state-code-restricted">
-        <span>{{ TEXT.RESTRICTED.TITLE }}</span>
+      <h1 class="STUDY-NOTES--state-code STUDY-NOTES--state-code-draft">
+        <span>{{ TEXT.DRAFT.TITLE }}</span>
       </h1>
       <br />
-      <SpeechBubble :messages="TEXT.RESTRICTED.SPEECH" :char-delay="30" :line-delay="600" />
+      <SpeechBubble :messages="TEXT.DRAFT.SPEECH" :char-delay="30" :line-delay="600" />
       <br />
       <ActionButton variant="danger" @click="goHome">[RETURN TO ARCHIVES]</ActionButton>
     </div>
@@ -114,13 +134,19 @@ const isStatePage = computed(() => restricted.value || modules.value.length === 
         {{ title.toUpperCase() }}
         <NeonDivider />
       </h1>
-      <p class="STUDY-NOTES--category-desc">{{ description }}</p>
+      <nav class="STUDY-NOTES--category-breadcrumb" aria-label="Breadcrumb">
+        <span class="STUDY-NOTES--breadcrumb-prefix">&lt;&lt;</span>
+        <template v-for="(item, index) in breadcrumbs" :key="item.href">
+          <a :href="item.href" class="STUDY-NOTES--breadcrumb-link">{{ item.label }}</a>
+          <span v-if="index < breadcrumbs.length - 1" class="STUDY-NOTES--breadcrumb-separator"> / </span>
+        </template>
+      </nav>
     </header>
     <br />
-    <!-- Modules Grid - Main Content -->
+    <!-- Category Grid -->
     <main class="STUDY-NOTES--category-main">
-      <div class="STUDY-NOTES--module-grid">
-        <ModuleCard v-for="mod in modules" :key="mod.link" :text="mod.text" :link="mod.link" />
+      <div class="STUDY-NOTES--subcategory-grid">
+        <CategoryCard v-for="mod in modules" :key="mod.link" :title="mod.text" :link="mod.link" :draft="mod.draft" />
       </div>
     </main>
   </div>
@@ -195,13 +221,33 @@ const isStatePage = computed(() => restricted.value || modules.value.length === 
   }
 }
 
-/* Description */
-.STUDY-NOTES--category-desc {
+/* Breadcrumb Navigation */
+.STUDY-NOTES--category-breadcrumb {
   font-family: var(--STUDY-NOTES--font-mono);
   font-size: var(--STUDY-NOTES--text-sm);
-  color: var(--STUDY-NOTES--neon-green-dim);
   letter-spacing: 0.05em;
   margin: 0;
+}
+
+.STUDY-NOTES--breadcrumb-prefix {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  margin-right: var(--STUDY-NOTES--spacing-2);
+}
+
+.STUDY-NOTES--breadcrumb-link {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  text-decoration: none;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.STUDY-NOTES--breadcrumb-link:hover {
+  color: var(--STUDY-NOTES--neon-green);
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
+}
+
+.STUDY-NOTES--breadcrumb-separator {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  opacity: 0.6;
 }
 
 /* ============================================
@@ -214,29 +260,41 @@ const isStatePage = computed(() => restricted.value || modules.value.length === 
 }
 
 /* ============================================
- * Module Grid
+ * Category Grid
+ * Same responsive grid as homepage CategoryCard grid
  * ============================================ */
 
-.STUDY-NOTES--module-grid {
+.STUDY-NOTES--subcategory-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--STUDY-NOTES--spacing-3);
+  gap: var(--STUDY-NOTES--spacing-5);
+  max-width: var(--STUDY-NOTES--max-width-content);
+  margin: 0 auto;
 }
 
-@media (min-width: 640px) {
-  .STUDY-NOTES--module-grid {
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+  .STUDY-NOTES--subcategory-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 960px) {
-  .STUDY-NOTES--module-grid {
+/* Desktop: 3 columns */
+@media (min-width: 1024px) {
+  .STUDY-NOTES--subcategory-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* Large Desktop: 4 columns */
+@media (min-width: 1440px) {
+  .STUDY-NOTES--subcategory-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* ============================================
- * Empty/Restricted State - 404-like layout
+ * Empty/Draft State - 404-like layout
  * ============================================ */
 
 .STUDY-NOTES--category-state {
@@ -274,19 +332,19 @@ const isStatePage = computed(() => restricted.value || modules.value.length === 
   }
 }
 
-/* Restricted State - Red Theme */
-.STUDY-NOTES--state-code-restricted {
+/* Draft State - Red Theme */
+.STUDY-NOTES--state-code-draft {
   color: var(--STUDY-NOTES--color-error);
   text-shadow: var(--STUDY-NOTES--text-glow-red);
 }
 
 
-/* Restricted SpeechBubble - Red Theme */
-.STUDY-NOTES--category-state:has(.STUDY-NOTES--state-code-restricted) :deep(.STUDY-NOTES--bubble) {
+/* Draft SpeechBubble - Red Theme */
+.STUDY-NOTES--category-state:has(.STUDY-NOTES--state-code-draft) :deep(.STUDY-NOTES--bubble) {
   color: var(--STUDY-NOTES--color-error);
 }
 
-.STUDY-NOTES--category-state:has(.STUDY-NOTES--state-code-restricted) :deep(.STUDY-NOTES--bubble-cursor) {
+.STUDY-NOTES--category-state:has(.STUDY-NOTES--state-code-draft) :deep(.STUDY-NOTES--bubble-cursor) {
   background: var(--STUDY-NOTES--color-error);
 }
 </style>
@@ -318,7 +376,7 @@ html.category-page-active .VPNav {
   display: none;
 }
 
-/* Lock scroll on state page (empty/restricted) */
+/* Lock scroll on state page (empty/draft) */
 html.category-state-active,
 html.category-state-active body {
   overflow: hidden;

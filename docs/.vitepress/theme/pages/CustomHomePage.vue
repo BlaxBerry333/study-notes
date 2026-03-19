@@ -34,13 +34,10 @@ const TEXT = {
   },
 }
 
-// Categories for homepage cards
+// Categories for homepage cards - major categories
 const CATEGORIES = [
-  { title: 'Web Frontend', link: '/programming/web-frontend/' },
-  { title: 'Web Backend', link: '/programming/web-backend/' },
-  { title: 'Data Science', link: '/programming/data-science/' },
-  { title: 'Japanese', link: '/foreign-languages/japanese/', restricted: true },
-  { title: 'English', link: '/foreign-languages/english/', restricted: true },
+  { title: 'Programming', link: '/programming/' },
+  { title: 'Foreign Languages', link: '/foreign-languages/', draft: true },
 ]
 </script>
 

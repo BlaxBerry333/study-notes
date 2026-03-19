@@ -17,6 +17,10 @@
   --STUDY-NOTES--neon-pink-dim: #cc00cc;
   --STUDY-NOTES--neon-pink-glow: rgba(255, 0, 255, 0.4);
 
+  --STUDY-NOTES--neon-red: #ff3333;
+  --STUDY-NOTES--neon-red-dim: #cc3333;
+  --STUDY-NOTES--neon-red-glow: rgba(255, 51, 51, 0.4);
+
   --STUDY-NOTES--neon-cyan: #00ffff;
   --STUDY-NOTES--neon-cyan-dim: #00cccc;
   --STUDY-NOTES--neon-cyan-glow: rgba(0, 255, 255, 0.4);
@@ -29,6 +33,7 @@
   --STUDY-NOTES--cyber-bg-end: #1a1a2e;
 
   /* Cyberpunk surface */
+  --STUDY-NOTES--cyber-surface-dim: rgba(10, 10, 15, 0.6);
   --STUDY-NOTES--cyber-surface: rgba(26, 26, 46, 0.8);
   --STUDY-NOTES--cyber-surface-hover: rgba(26, 26, 46, 0.95);
   --STUDY-NOTES--cyber-border: rgba(0, 255, 159, 0.3);
@@ -166,6 +171,7 @@
   --STUDY-NOTES--text-glow-red:
     0 0 10px rgba(255, 51, 51, 0.6), 0 0 20px rgba(255, 51, 51, 0.6), 0 0 40px
     rgba(255, 51, 51, 0.6);
+  --STUDY-NOTES--text-glow-red-sm: 0 0 10px rgba(255, 51, 51, 0.8), 0 0 20px rgba(255, 51, 51, 0.5);
 
   /* ============================================
    * Layout

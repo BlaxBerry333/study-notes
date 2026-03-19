@@ -1,0 +1,458 @@
+/**
+ * Document Page Styles - Chen's Study Notes
+ * 40K Cogitator Theme - Document Content Styles
+ *
+ * 文档内容区域的样式：标题、段落、链接、代码块等
+ */
+
+/* ============================================
+ * Headings - 标题样式
+ * ============================================ */
+
+.dark .vp-doc h1,
+.dark .vp-doc h2,
+.dark .vp-doc h3,
+.dark .vp-doc h4,
+.dark .vp-doc h5,
+.dark .vp-doc h6 {
+  color: var(--STUDY-NOTES--neon-green);
+  font-family: var(--STUDY-NOTES--font-mono);
+}
+
+/* H1 - 主标题 (Mobile: 28px, Desktop: 40px) */
+.dark .vp-doc h1 {
+  position: relative;
+  font-size: 28px;
+  font-weight: bold;
+  padding-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h1 {
+    font-size: 40px;
+    padding-bottom: 16px;
+  }
+}
+
+.dark .vp-doc h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
+}
+
+/* H2 - 二级标题 (Mobile: 24px, Desktop: 32px) */
+.dark .vp-doc h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 60px;
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h2 {
+    font-size: 32px;
+  }
+}
+
+/* H3 - 三级标题 (Mobile: 20px, Desktop: 24px) */
+.dark .vp-doc h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h3 {
+    font-size: 24px;
+    margin-top: 32px;
+  }
+}
+
+/* H4 - 四级标题 (Mobile: 16px, Desktop: 18px) */
+.dark .vp-doc h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+@media (min-width: 768px) {
+  .dark .vp-doc h4 {
+    font-size: 18px;
+  }
+}
+
+/* 锚点链接 */
+.dark .vp-doc .header-anchor {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  opacity: 0;
+  transition: opacity var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc h1:hover .header-anchor,
+.dark .vp-doc h2:hover .header-anchor,
+.dark .vp-doc h3:hover .header-anchor,
+.dark .vp-doc h4:hover .header-anchor {
+  opacity: 1;
+}
+
+.dark .vp-doc .header-anchor:hover {
+  color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Paragraphs - 段落
+ * ============================================ */
+
+.dark .vp-doc p {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.dark .vp-doc strong {
+  color: var(--STUDY-NOTES--neon-green);
+  font-weight: bold;
+}
+
+.dark .vp-doc em {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+/* ============================================
+ * Links - 链接
+ * ============================================ */
+
+.dark .vp-doc a {
+  color: var(--STUDY-NOTES--cyber-text-primary);
+  text-decoration: none;
+  text-shadow: var(--STUDY-NOTES--text-glow-green);
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc a:hover {
+  border-bottom-color: var(--STUDY-NOTES--cyber-text-primary);
+}
+
+/* 外部链接图标 */
+.dark .vp-doc a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 0.85em;
+  color: var(--STUDY-NOTES--neon-green-dim);
+  opacity: 0.7;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc a[target="_blank"]:hover::after {
+  color: var(--STUDY-NOTES--cyber-text-primary);
+  opacity: 1;
+}
+
+/* ============================================
+ * Code Blocks - 代码块
+ * ============================================ */
+
+.dark .vp-doc div[class*="language-"] {
+  background: var(--STUDY-NOTES--code-block-bg);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-radius: 0;
+}
+
+.dark .vp-doc div[class*="language-"] pre {
+  background: black;
+}
+
+/* 语言标签 */
+.dark .vp-doc div[class*="language-"] span.lang {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-doc div[class*="language-"]:hover span.lang {
+  opacity: 1 !important;
+}
+
+/* 行号 */
+.dark .vp-doc div[class*="language-"].line-numbers-mode .line-numbers {
+  border-right: 1px solid var(--STUDY-NOTES--cyber-border);
+  color: var(--STUDY-NOTES--cyber-text-muted);
+}
+
+/* 高亮行 */
+.dark .vp-doc div[class*="language-"] .line.highlighted {
+  background: var(--STUDY-NOTES--green-tint-strong);
+}
+
+/* 复制按钮 - 隐藏 */
+.dark .vp-doc div[class*="language-"] button.copy {
+  display: none;
+}
+
+/* ============================================
+ * Code Group - 代码组标签
+ * ============================================ */
+
+.dark .vp-code-group .tabs label {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 12px;
+  transition: all var(--STUDY-NOTES--duration-fast) var(--STUDY-NOTES--ease-default);
+}
+
+.dark .vp-code-group .tabs label:hover {
+  color: var(--STUDY-NOTES--cyber-text-primary);
+}
+
+.dark .vp-code-group input:checked + label {
+  color: var(--STUDY-NOTES--neon-green);
+  text-shadow: var(--STUDY-NOTES--text-glow-green-sm);
+}
+
+.dark .vp-code-group .tabs {
+  background: transparent;
+  border-bottom: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+/* 行内代码 */
+.dark .vp-doc :not(pre) > code {
+  background: var(--STUDY-NOTES--green-tint-strong);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  color: var(--STUDY-NOTES--neon-green);
+  border-radius: 0;
+  padding: 2px 6px;
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 0.9em;
+}
+
+/* ============================================
+ * Blockquotes - 引用块
+ * ============================================ */
+
+.dark .vp-doc blockquote {
+  border-left: 2px solid var(--STUDY-NOTES--neon-green-glow);
+  background: var(--STUDY-NOTES--blockquote-bg);
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 0;
+  opacity: 0.8;
+}
+
+.dark .vp-doc blockquote p,
+.dark .vp-doc blockquote li,
+.dark .vp-doc blockquote code {
+  color: var(--STUDY-NOTES--neon-green-glow);
+}
+
+.dark .vp-doc blockquote > p {
+  margin: 0;
+}
+
+.dark .vp-doc blockquote div[class*="language-"] {
+  margin: 8px 0;
+}
+
+.dark .vp-doc blockquote div[class*="language-"] pre {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ============================================
+ * Lists - 列表
+ * ============================================ */
+
+.dark .vp-doc ul,
+.dark .vp-doc ol {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc ul > li::marker,
+.dark .vp-doc ol > li::marker {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc li input[type="checkbox"] {
+  accent-color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Tables - 表格
+ * ============================================ */
+
+.dark .vp-doc table {
+  border-collapse: collapse;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+
+.dark .vp-doc table th,
+.dark .vp-doc table td {
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  padding: 10px 14px;
+}
+
+.dark .vp-doc table th {
+  background: var(--STUDY-NOTES--green-tint-strong);
+  color: var(--STUDY-NOTES--neon-green);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dark .vp-doc table td {
+  color: var(--STUDY-NOTES--neon-green-dim);
+}
+
+.dark .vp-doc table tr:nth-child(2n) {
+  background: transparent;
+}
+
+.dark .vp-doc table tr:hover td {
+  background: var(--STUDY-NOTES--green-tint-subtle);
+}
+
+/* ============================================
+ * Custom Containers - 自定义提示框
+ * ============================================ */
+
+.dark .vp-doc .custom-block {
+  border-radius: 0;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+/* Tip - 使用 success 绿色 */
+.dark .vp-doc .custom-block.tip {
+  background: var(--STUDY-NOTES--color-success-soft);
+  border-left-color: var(--STUDY-NOTES--color-success);
+}
+
+.dark .vp-doc .custom-block.tip .custom-block-title {
+  color: var(--STUDY-NOTES--color-success);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.tip p,
+.dark .vp-doc .custom-block.tip li,
+.dark .vp-doc .custom-block.tip code {
+  color: var(--STUDY-NOTES--color-success);
+}
+
+/* Info - 使用 info 蓝色 */
+.dark .vp-doc .custom-block.info {
+  background: var(--STUDY-NOTES--color-info-soft);
+  border-left-color: var(--STUDY-NOTES--color-info);
+}
+
+.dark .vp-doc .custom-block.info .custom-block-title {
+  color: var(--STUDY-NOTES--color-info);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.info p,
+.dark .vp-doc .custom-block.info li,
+.dark .vp-doc .custom-block.info code {
+  color: var(--STUDY-NOTES--color-info);
+}
+
+/* Warning - 使用 warning 橙色 */
+.dark .vp-doc .custom-block.warning {
+  background: var(--STUDY-NOTES--color-warning-soft);
+  border-left-color: var(--STUDY-NOTES--color-warning);
+}
+
+.dark .vp-doc .custom-block.warning .custom-block-title {
+  color: var(--STUDY-NOTES--color-warning);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.warning p,
+.dark .vp-doc .custom-block.warning li,
+.dark .vp-doc .custom-block.warning code {
+  color: var(--STUDY-NOTES--color-warning);
+}
+
+/* Danger - 使用 error 红色 */
+.dark .vp-doc .custom-block.danger {
+  background: var(--STUDY-NOTES--color-error-soft);
+  border-left-color: var(--STUDY-NOTES--color-error);
+}
+
+.dark .vp-doc .custom-block.danger .custom-block-title {
+  color: var(--STUDY-NOTES--color-error);
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-weight: bold;
+}
+
+.dark .vp-doc .custom-block.danger p,
+.dark .vp-doc .custom-block.danger li,
+.dark .vp-doc .custom-block.danger code {
+  color: var(--STUDY-NOTES--color-error);
+}
+
+/* Details */
+.dark .vp-doc .custom-block.details {
+  background: var(--STUDY-NOTES--cyber-surface);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+}
+
+.dark .vp-doc .custom-block.details summary {
+  color: var(--STUDY-NOTES--neon-green-dim);
+  font-family: var(--STUDY-NOTES--font-mono);
+  cursor: pointer;
+}
+
+.dark .vp-doc .custom-block.details summary:hover {
+  color: var(--STUDY-NOTES--neon-green);
+}
+
+/* ============================================
+ * Horizontal Rule - 水平线
+ * ============================================ */
+
+.dark .vp-doc hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--STUDY-NOTES--cyber-border), transparent);
+  margin: 32px 0;
+}
+
+/* ============================================
+ * Images - 图片
+ * ============================================ */
+
+.dark .vp-doc img {
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-radius: 0;
+}
+
+/* ============================================
+ * Keyboard - 键盘按键
+ * ============================================ */
+
+.dark .vp-doc kbd {
+  background: var(--STUDY-NOTES--cyber-surface);
+  border: 1px solid var(--STUDY-NOTES--cyber-border);
+  border-bottom-width: 2px;
+  border-radius: 0;
+  padding: 2px 6px;
+  font-family: var(--STUDY-NOTES--font-mono);
+  font-size: 0.85em;
+  color: var(--STUDY-NOTES--neon-green-dim);
+}

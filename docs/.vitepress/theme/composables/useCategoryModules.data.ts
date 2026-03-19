@@ -5,6 +5,7 @@ export interface ModuleData {
   text: string
   link: string
   description?: string
+  draft?: boolean
 }
 
 export interface CategoryModulesData {
@@ -28,14 +29,35 @@ export default createContentLoader('**/*.md', {
       // Split into parts
       const parts = normalizedUrl.split('/').filter(Boolean)
 
-      // Need at least 3 levels: /category/subcategory/module
+      // Skip root-level pages (e.g., /index.md)
+      if (parts.length < 2) continue
+
+      // Category index pages (layout: custom-category) → register as parent's sub-item
+      if (frontmatter.layout === 'custom-category') {
+        // Only 2-level paths become sub-items of major categories
+        // e.g., /programming/web-frontend/ → parent is /programming/
+        if (parts.length === 2) {
+          const parentPath = `/${parts[0]}/`
+          if (!result[parentPath]) {
+            result[parentPath] = []
+          }
+
+          const title = frontmatter.title || parts[1].toUpperCase()
+          result[parentPath].push({
+            text: title,
+            link: normalizedUrl.startsWith('/') ? normalizedUrl : `/${normalizedUrl}`,
+            description: frontmatter.description,
+            draft: frontmatter.draft === true ? true : undefined,
+          })
+        }
+        continue
+      }
+
+      // Regular pages need at least 3 levels: /category/subcategory/module
       // e.g., /programming/data-science/sql
       if (parts.length < 3) continue
 
-      // Skip category index pages (layout: custom-category)
-      if (frontmatter.layout === 'custom-category') continue
-
-      // Get the parent path as category (e.g., /programming/data/)
+      // Get the parent path as category (e.g., /programming/data-science/)
       const categoryPath = `/${parts.slice(0, -1).join('/')}/`
 
       // Get module name from last part of URL
