@@ -15,13 +15,19 @@ export const PROGRAMMING_WEB_FRONTEND_SIDEBAR: DefaultTheme.Sidebar = {
   [PATH_REACT]: [
     { text: 'React', link: `${PATH_REACT}` },
     {
-      text: '组件',
+      text: '基础',
       collapsed: false,
       items: [
-        {
-          text: '设计模式',
-          link: `${PATH_REACT}components/design-patterns`,
-        },
+        { text: '组件设计模式', link: `${PATH_REACT}design-patterns` },
+        { text: '实用自定义 Hooks', link: `${PATH_REACT}custom-hooks` },
+      ],
+    },
+    {
+      text: '性能优化',
+      collapsed: false,
+      items: [
+        { text: '渲染优化', link: `${PATH_REACT}performance` },
+        { text: '加载性能', link: `${PATH_REACT}performance-loading` },
       ],
     },
   ],
