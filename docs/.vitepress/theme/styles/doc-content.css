@@ -289,17 +289,24 @@
  * Tables - 表格
  * ============================================ */
 
+.dark .vp-doc .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .dark .vp-doc table {
   border-collapse: collapse;
+  display: table;
   width: 100%;
-  display: block;
-  overflow-x: auto;
+  min-width: 100%;
 }
 
 .dark .vp-doc table th,
 .dark .vp-doc table td {
   border: 1px solid var(--STUDY-NOTES--cyber-border);
   padding: 10px 14px;
+  min-width: 80px;
+  white-space: nowrap;
 }
 
 .dark .vp-doc table th {

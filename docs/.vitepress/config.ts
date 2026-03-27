@@ -127,6 +127,25 @@ export default defineConfig({
       infoLabel: '【信息】',
       detailsLabel: '【详细信息】',
     },
+    config: (md) => {
+      // Wrap tables in a scrollable container for full-width display
+      const defaultRender: typeof md.renderer.renderToken = (tokens, idx, options) =>
+        md.renderer.renderToken(tokens, idx, options)
+      const originalTableOpen = md.renderer.rules.table_open
+      const originalTableClose = md.renderer.rules.table_close
+      md.renderer.rules.table_open = (tokens, idx, options, env, self) => {
+        const rendered = originalTableOpen
+          ? originalTableOpen(tokens, idx, options, env, self)
+          : defaultRender(tokens, idx, options)
+        return `<div class="table-wrapper">${rendered}`
+      }
+      md.renderer.rules.table_close = (tokens, idx, options, env, self) => {
+        const rendered = originalTableClose
+          ? originalTableClose(tokens, idx, options, env, self)
+          : defaultRender(tokens, idx, options)
+        return `${rendered}</div>`
+      }
+    },
   },
 
   // Last updated timestamp
