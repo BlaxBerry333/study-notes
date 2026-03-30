@@ -54,7 +54,6 @@ FROM students
 WHERE height > 180
    OR gender = 'male';
 ```
-
 :::
 
 ---
@@ -84,7 +83,6 @@ SELECT * FROM products ORDER BY price DESC;
 
 SELECT name, price FROM products ORDER BY price DESC;
 ```
-
 :::
 
 ---
@@ -109,7 +107,6 @@ WHERE class = 'B'
 ORDER BY score DESC
 LIMIT 3;
 ```
-
 :::
 
 ---
@@ -139,7 +136,6 @@ SELECT MIN(age) FROM students WHERE class = '6-A';
 
 SELECT AVG(price) FROM products;
 ```
-
 :::
 
 ---
@@ -169,7 +165,6 @@ SELECT owner_id, AVG(price)
 FROM products
 GROUP BY owner_id;
 ```
-
 :::
 
 ---
@@ -203,7 +198,6 @@ FROM customers
 GROUP BY country
 HAVING COUNT(customer_id) > 1000;
 ```
-
 :::
 
 ---
@@ -255,7 +249,6 @@ JOIN customers ON orders.customer_id = customers.id
 JOIN order_items ON orders.id = order_items.order_id
 JOIN products ON order_items.product_id = products.id;
 ```
-
 :::
 
 ---

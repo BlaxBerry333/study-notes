@@ -177,6 +177,8 @@ const trpcServerRouter = t.router({
 
 :::
 
+:::
+
 ---
 
 ### 中间件
@@ -302,6 +304,8 @@ const trpcServerRouter = t.router({
 
 :::
 
+:::
+
 ---
 
 ### 上下文
@@ -397,7 +401,7 @@ export { handler as GET, handler as POST };
 
 ### 调用过程
 
-页面组件内通过 [客户端对象](#客户端对象-trpcclient) 调用对应的 [过程](#过程-procedure) 处理请求
+页面组件内通过 [客户端对象](#客户端对象) 调用对应的 [过程](#过程) 处理请求
 
 ```ts
 "use client";
@@ -418,7 +422,7 @@ function 组件() {
         const data3 = await 客户端对象.变更过程名.mutation(参数);
         setData({ data1, data2, data3 });
         setIsLoading(false);
-      }catch (error) {
+      } catch (error) {
         console.error(error);
         setIsLoading(false);
       }

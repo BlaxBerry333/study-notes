@@ -1,13 +1,14 @@
 # BigQuery
 
-> Google Cloud 的无服务器数据仓库
+Google Cloud 的无服务器数据仓库
 
-## 特点
+::: warning 特点:
 
 - 无服务器、按需扩展
 - 列式存储、PB 级数据分析
 - 标准 SQL 支持
 - 与 GCP 生态深度集成
+:::
 
 ---
 
@@ -90,6 +91,8 @@ DATE_ADD(date_col, INTERVAL 7 DAY)
 DATE_DIFF(date1, date2, DAY)
 ```
 
+---
+
 ### 字符串
 
 ```sql
@@ -100,6 +103,8 @@ CONCAT(first_name, ' ', last_name)
 REGEXP_EXTRACT(url, r'/product/(\d+)')
 REGEXP_CONTAINS(email, r'@gmail\.com$')
 ```
+
+---
 
 ### 数组
 
@@ -137,6 +142,7 @@ FROM `dataset.orders`;
 ## 成本优化
 
 ::: tip 最佳实践
+
 - **只查需要的列**：避免 `SELECT *`
 - **使用分区表**：按日期/时间分区
 - **使用聚簇表**：常用筛选字段聚簇

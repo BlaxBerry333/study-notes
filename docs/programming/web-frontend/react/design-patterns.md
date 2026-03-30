@@ -5,7 +5,6 @@
 ## 复合组件
 
 > Compound Components
-
 该设计模式通过组合 **父组件 + 语义化子组件** 来构建复杂 UI 结构
 
 当一个组件有明确的父子关系结构且多个子组件之间共享状态，可考虑使用该设计模式来提高组件使用时的可读性和可维护性
@@ -75,7 +74,6 @@ export const Layout = Object.assign(LayoutRoot, {
 - 父组件负责状态与上下文，子组件只负责职责
 - 通过 `React.Context` 在组件内共享状态
 - 使用 `Object.assign` 导出子组件
-
 :::
 
 ---
@@ -134,15 +132,11 @@ function withAuth<P extends WithAuthProps>(
 - 命名约定：`with` 前缀（如 `withAuth`、`withTheme`）
 - 不要在 render 方法内创建 HOC，会导致组件反复卸载和重建
 - 现代 React 中 Custom Hooks 可以替代大部分 HOC 场景
-
 :::
 
 ---
 
 ## Render Props
-
-> Render Props Pattern
-
 该设计模式通过将渲染逻辑作为 **函数 prop** 传入组件，让组件控制逻辑而由调用方决定 UI
 
 当多个组件需要共享相同的行为逻辑但渲染完全不同时，可考虑使用该设计模式
@@ -199,7 +193,6 @@ function MouseTracker({ render }: MouseTrackerProps) {
 - 组件封装逻辑和状态，通过函数 prop 把数据交给调用方渲染
 - `children` 也可以作为 render prop 使用：`children(data)`
 - 现代 React 中 Custom Hooks 可以替代大部分 Render Props 场景
-
 :::
 
 ---
@@ -358,7 +351,6 @@ function useSelect({ options, onChange }: UseSelectProps) {
 - 典型库：Headless UI、Radix UI、Downshift、TanStack Table
 - 核心价值：封装复杂的交互逻辑和可访问性，使用方只关注 UI 样式
 - 通过 `getXxxProps()` 模式返回 props 对象，使用方通过展开运算符应用到元素上
-
 :::
 
 ---
@@ -398,7 +390,6 @@ function App() {
 - 状态由 React 管理（props + state），随时可获取值
 - 每次输入触发 re-render，容易实现实时验证和字段联动
 - 适用场景：复杂表单、实时交互、字段间有联动
-
 :::
 
 ---
@@ -431,5 +422,4 @@ function SearchBox({ onSearch }: { onSearch: (value: string) => void }) {
 - 状态由 DOM 管理（ref），需要时通过 ref 读取值
 - 输入不触发 re-render，性能更好，但难以实现动态联动
 - 适用场景：简单表单、仅提交时需要值、大型表单需考虑性能
-
 :::

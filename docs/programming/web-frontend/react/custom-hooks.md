@@ -70,7 +70,6 @@ function useMediaQuery(query: string): boolean {
 - **不该用的场景**：纯样式响应式直接用 CSS media query，不要为了隐藏一个元素就引入 JS 判断
 - **为什么用 `matchMedia` 而不是监听 `resize`**：`matchMedia` 是浏览器原生的断点匹配机制，只在跨越断点时触发回调，而 `resize` 每像素都触发，需要自己加防抖还不精确
 - SSR 兼容：初始值在服务端返回 `false`，客户端 hydrate 后立即修正——对 SEO 关键内容建议用 CSS 方案
-
 :::
 
 ---
@@ -176,7 +175,6 @@ function useIntersectionObserver(
 - **不该用的场景**：只是想知道页面滚动了多少像素（用 `scroll` 事件）；需要精确的像素级位置（用 `getBoundingClientRect`）
 - **`rootMargin` 很关键**：设为正值可以提前触发（预加载），负值可以延迟触发（元素进入视口一定距离后才算可见）
 - **`threshold`**：`0` 表示只要露出一个像素就触发，`0.5` 表示可见 50% 才触发，`1` 表示完全可见——根据业务需求选择
-
 :::
 
 ---
@@ -266,7 +264,6 @@ function useAbortController(): () => AbortSignal {
 - **不该用的场景**：如果你已经在用 TanStack Query / SWR / useRequest 等请求库，它们内部已经处理了取消和竞态
 - **为什么返回函数而不是 signal**：因为需要在每次新请求时创建新的 controller 并 abort 旧的。如果直接返回 signal，就无法实现"新请求自动取消旧请求"的竞态控制
 - **AbortError 的处理**：`fetch` 被 abort 后会 reject 一个 `AbortError`，通过 `signal.aborted` 判断是否是主动取消，避免把取消当错误处理
-
 :::
 
 ---
@@ -388,7 +385,6 @@ function useOptimisticUpdate<T>(initialState: T) {
 - **React 19 的 `useOptimistic`**：内置方案与 Transition 深度集成，如果你的项目用 React 19 + Server Actions，优先用内置版本
 - **快照策略**：`snapshotRef` 保存的是首次乐观更新前的状态。`isPendingRef` 确保连续快速操作（如用户快速点两次赞）不会覆盖快照，rollback 始终能回到真正的原始状态。服务端成功后调用 `confirm()` 重置 pending 标记，为下一轮乐观更新做准备；失败则调用 `rollback()` 恢复快照并重置标记
 - **`updateOptimistic` 引用稳定**：通过 `setState(prev => ...)` 的函数形式获取当前值，避免了对 `state` 的闭包依赖，依赖数组为空，函数引用不会因 state 变化而重建
-
 :::
 
 ---
@@ -491,7 +487,6 @@ function useFormField(initialValue: string, validate?: Validator) {
 - **touched 的意义**：用户没操作过的字段不应该显示错误。`onBlur` 时标记 touched，提交时通过 `touch()` 强制显示所有错误
 - **`inputProps` 模式**：返回一个可以直接展开到 `<input>` 的对象，减少样板代码。同样的模式在 Formik 的 `getFieldProps` 和 Downshift 的 `getInputProps` 中都能见到
 - **`validate` 依赖稳定性**：`validate` 函数如果在组件中内联定义，每次 render 都是新引用，`useMemo` 会重复执行。校验逻辑本身很轻所以不影响性能，但如果校验函数有副作用（不应该有），需要用 `useCallback` 稳定引用
-
 :::
 
 ---
@@ -654,5 +649,4 @@ function useStateWithHistory<T>(
 - **不该用的场景**：简单的状态切换（开关、tab）——没有撤销需求就不要白白维护历史栈
 - **`maxHistory` 防内存泄漏**：默认上限 50 条。如果状态是大对象（如画布数据），应该设小一些或考虑只存 diff 而非完整快照
 - **为什么历史栈用 ref、指针用 state**：历史栈的内容变化不需要触发 re-render，用 ref 存储避免不必要的渲染。但指针（pointer）必须用 state，因为 `canUndo`/`canRedo` 依赖指针位置来判断——如果指针也用 ref，当 undo 到底部时 state 值没变（React bailout 优化），`canUndo` 就不会从 true 变为 false，按钮状态会卡住
-
 :::
