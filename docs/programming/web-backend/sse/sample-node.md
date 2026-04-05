@@ -281,7 +281,8 @@ app.get("/api/events", (req, res) => {
 - 服务端需要能根据 ID **找到断点数据**（内存队列、数据库、Redis 等）
 - 上面的示例是最简单的场景（自增 ID），实际项目中通常需要用消息队列缓存最近的事件
 - `retry` 字段可控制客户端重连间隔，默认约 3 秒（各浏览器不同）
-  :::
+
+:::
 
 ---
 
@@ -389,4 +390,5 @@ async function chat(message: string) {
 - SSE 基于 HTTP，与现有基础设施（CDN、API 网关、认证中间件）**完全兼容**
 - 用 WebSocket 需要额外管理连接状态，对于"发一句收一段"的场景是过度设计
 - 前端只需要 `fetch` + `ReadableStream`，无需引入 WebSocket 库
-  :::
+
+:::

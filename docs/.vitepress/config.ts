@@ -2,15 +2,16 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
 
 import pkg from '../../package.json'
-import { DEFAULT_THEME_NAV } from './default-theme-configs/nav'
-import { DEFAULT_THEME_SIDEBAR } from './default-theme-configs/sidebar'
+import { jaNav } from './default-theme-configs/nav/ja'
+import { zhNav } from './default-theme-configs/nav/zh'
+import { jaSidebar } from './default-theme-configs/sidebar/ja'
+import { zhSidebar } from './default-theme-configs/sidebar/zh'
 
 export default defineConfig({
   // Site metadata
   title: "Chen's Study Notes",
   titleTemplate: ":title - Chen's Study Notes",
   description: pkg.description,
-  lang: 'zh-CN',
 
   // Base URL (for GitHub Pages subdirectory deployment)
   base: '/study-notes/',
@@ -46,67 +47,80 @@ export default defineConfig({
   // Disable theme toggle, force dark mode via CSS
   appearance: false,
 
-  // Theme configuration
+  // Locales
+  locales: {
+    root: {
+      label: '中文',
+      lang: 'zh-CN',
+      themeConfig: {
+        nav: zhNav,
+        sidebar: zhSidebar,
+
+        // Chinese UI labels
+        lastUpdated: {
+          text: '最后更新于',
+          formatOptions: {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          },
+        },
+        outline: {
+          level: [2, 3],
+          label: '本页目录',
+        },
+        docFooter: {
+          prev: '上一篇',
+          next: '下一篇',
+        },
+        returnToTopLabel: '返回顶部',
+        darkModeSwitchLabel: '主题',
+        lightModeSwitchTitle: '切换到浅色模式',
+        darkModeSwitchTitle: '切换到深色模式',
+        sidebarMenuLabel: '菜单',
+        langMenuLabel: '语言',
+      },
+    },
+    ja: {
+      label: '日本語',
+      lang: 'ja',
+      themeConfig: {
+        nav: jaNav,
+        sidebar: jaSidebar,
+
+        // Japanese UI labels
+        lastUpdated: {
+          text: '最終更新',
+          formatOptions: {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          },
+        },
+        outline: {
+          level: [2, 3],
+          label: '目次',
+        },
+        docFooter: {
+          prev: '前へ',
+          next: '次へ',
+        },
+        returnToTopLabel: 'トップに戻る',
+        darkModeSwitchLabel: 'テーマ',
+        lightModeSwitchTitle: 'ライトモードに切り替え',
+        darkModeSwitchTitle: 'ダークモードに切り替え',
+        sidebarMenuLabel: 'メニュー',
+        langMenuLabel: '言語',
+      },
+    },
+  },
+
+  // Theme configuration (shared across locales)
   themeConfig: {
     // Logo
     logo: '/logo.svg',
     siteTitle: "Chen's Study Notes",
 
-    // Navigation
-    nav: DEFAULT_THEME_NAV,
-
-    // Sidebar
-    sidebar: DEFAULT_THEME_SIDEBAR,
-
     // Social links
     socialLinks: [{ icon: 'github', link: 'https://github.com/BlaxBerry333/' }],
-
-    // Footer
-    // footer: {
-    //   message: 'All rights reserved.',
-    //   copyright: "Copyright © 2024 Chen's Study Notes",
-    // },
-
-    // Edit link (optional, update with your repo)
-    // editLink: {
-    //   pattern: 'https://github.com/chen/study-notes/edit/main/docs/:path',
-    //   text: 'Edit this page on GitHub'
-    // },
-
-    // Last updated
-    lastUpdated: {
-      text: '最后更新于',
-      formatOptions: {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      },
-    },
-
-    // Outline
-    outline: {
-      level: [2, 3],
-      label: '本页目录',
-    },
-
-    // Doc footer
-    docFooter: {
-      prev: '上一篇',
-      next: '下一篇',
-    },
-
-    // Return to top
-    returnToTopLabel: '返回顶部',
-
-    // Dark mode switch
-    darkModeSwitchLabel: '主题',
-    lightModeSwitchTitle: '切换到浅色模式',
-    darkModeSwitchTitle: '切换到深色模式',
-
-    // Sidebar menu
-    sidebarMenuLabel: '菜单',
-
-    // Language menu
-    langMenuLabel: '语言',
 
     // External link icon aria label
     externalLinkIcon: true,

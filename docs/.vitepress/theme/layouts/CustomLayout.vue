@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import VPNav from 'vitepress/dist/client/theme-default/components/VPNav.vue'
 import BackToTop from '../components/BackToTop.vue'
 import GridBackground from '../components/GridBackground.vue'
 import MatrixRain from '../components/MatrixRain.vue'
@@ -16,6 +17,7 @@ const { frontmatter, page } = useData()
 <template>
   <!-- Custom homepage for layout: custom-home -->
   <template v-if="frontmatter.layout === 'custom-home'">
+    <VPNav />
     <CustomHomePage />
     <SiteFooter />
     <ReadingProgress />
@@ -26,6 +28,7 @@ const { frontmatter, page } = useData()
 
   <!-- Category page for layout: custom-category -->
   <template v-else-if="frontmatter.layout === 'custom-category'">
+    <VPNav />
     <CustomCategoryPage />
     <SiteFooter />
     <ReadingProgress />
@@ -36,6 +39,7 @@ const { frontmatter, page } = useData()
 
   <!-- 404 Not Found page -->
   <template v-else-if="page.isNotFound">
+    <VPNav />
     <CustomNotFoundPage />
     <SiteFooter />
     <GridBackground />

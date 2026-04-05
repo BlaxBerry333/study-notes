@@ -47,12 +47,12 @@ const typeDefs = `#graphql
   }
 `;
 
-// 2. 定义 Resolver
 const users = [
   { id: "1", name: "Alice", email: "alice@example.com" },
   { id: "2", name: "Bob", email: "bob@example.com" },
 ];
 
+// 2. 定义 Resolver
 const resolvers = {
   Query: {
     users: () => users,
@@ -213,17 +213,7 @@ function UserDetail({ userId }: { userId: string }) {
 | `onCompleted: (data) => {}` | 查询完成回调       |
 | `onError: (error) => {}`    | 错误回调           |
 
-::: warning 缓存策略（fetchPolicy）
-
-| 策略                | 说明                         |
-| ------------------- | ---------------------------- |
-| `cache-first`       | 默认。先读缓存，没有才发请求 |
-| `cache-and-network` | 先返回缓存，同时发请求更新   |
-| `network-only`      | 总是发请求，结果写入缓存     |
-| `cache-only`        | 只读缓存，不发请求           |
-| `no-cache`          | 总是发请求，结果不写入缓存   |
-
-:::
+> 缓存策略（fetchPolicy）详见 [缓存 — 读取策略](/programming/web-backend/graphql/caching#读取策略-fetchpolicy)
 
 ---
 
@@ -308,6 +298,7 @@ function CreateUserForm() {
 | 手动更新缓存 | `update` + `cache.writeQuery` | 无额外请求，精确控制  |
 | 乐观更新     | `optimisticResponse`          | UI 即时响应，体验最佳 |
 
+详细对比和代码示例见 [缓存 — Mutation 后更新缓存](/programming/web-backend/graphql/caching#mutation-后更新缓存)
 :::
 
 ---
@@ -385,6 +376,52 @@ function PostList() {
 ---
 
 ## 订阅（useSubscription）
+
+Subscription 通过 WebSocket 传输，需要额外配置 `GraphQLWsLink`，并用 `split` 将 HTTP 请求和 WebSocket 请求分流：
+
+```ts
+import { ApolloClient, InMemoryCache, HttpLink, split } from "@apollo/client";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+
+const httpLink = new HttpLink({ uri: "http://localhost:4000/graphql" });
+
+const wsLink = new GraphQLWsLink(
+  createClient({ url: "ws://localhost:4000/graphql" }),
+);
+
+// Query/Mutation 走 HTTP，Subscription 走 WebSocket
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLink,
+);
+
+const client = new ApolloClient({
+  link: splitLink,
+  cache: new InMemoryCache(),
+});
+```
+
+::: warning 需要安装 graphql-ws
+
+```zsh
+% npm install graphql-ws
+```
+
+`subscriptions-transport-ws` 已废弃，使用 `graphql-ws` 替代
+:::
+
+---
+
+### useSubscription
 
 ```tsx
 import { useSubscription, gql } from "@apollo/client";
@@ -581,79 +618,7 @@ Apollo Client 也可以搭配 TanStack Query 使用 — Apollo 仅作为 GraphQL
 
 ---
 
-## 缓存设计
-
-GraphQL 所有请求都是 `POST /graphql`，无法利用 HTTP 缓存，因此缓存必须在客户端实现。主流方案有两种思路：
-
-| 维度     | 规范化缓存（Apollo）                                       | 文档缓存（urql）                                        |
-| -------- | ---------------------------------------------------------- | ------------------------------------------------------- |
-| 存储方式 | 将响应拆解为独立对象，以 `__typename:id` 为 key 扁平存储   | 以**查询 + 变量**为 key，整份响应作为 value 存储        |
-| 自动同步 | 同一对象只存一份，任何查询更新了该对象，所有引用处自动更新 | 不自动同步，Mutation 后通过标记相关查询失效触发重新获取 |
-| 精确度   | 高——对象级别更新，不会多余请求                             | 较低——按查询粒度失效，可能触发不必要的重新获取          |
-| 复杂度   | 高——需要返回 `id` + `__typename`，缓存合并策略需手动配置   | 低——开箱即用，极少需要手动配置                          |
-| 适用场景 | 数据关系复杂、多处引用同一对象、需要乐观更新               | 数据关系简单、追求轻量和快速集成                        |
-
-::: warning 选哪个？
-大多数项目选 **Apollo**（生态最大、功能最全）。如果项目数据关系简单、团队追求轻量，**urql** 的文档缓存上手成本更低。核心区别：规范化缓存用"拆对象"换精确更新，文档缓存用"整份存"换实现简单
-:::
-
----
-
-### 规范化缓存（InMemoryCache）
-
-Apollo Client 的 `InMemoryCache` 将响应数据拆解为独立对象，以 `__typename:id` 为 key 存储
-
-```txt
-# 查询结果
-{
-  user(id: "1") {
-    id
-    name
-    posts {
-      id
-      title
-    }
-  }
-}
-
-# Apollo 缓存中的存储结构
-{
-  "User:1": { __typename: "User", id: "1", name: "Alice", posts: ["Post:1", "Post:2"] },
-  "Post:1": { __typename: "Post", id: "1", title: "Hello" },
-  "Post:2": { __typename: "Post", id: "2", title: "World" },
-  "ROOT_QUERY": { "user({\"id\":\"1\"})": { __ref: "User:1" } }
-}
-```
-
-这意味着：
-
-- 同一对象只存储一份，任何查询更新了 `User:1`，所有引用它的组件都会自动更新
-- Mutation 返回的对象如果包含 `id` + `__typename`，缓存会自动合并更新
-
----
-
-### 手动操作缓存
-
-```ts
-import { useApolloClient } from "@apollo/client";
-
-function SomeComponent() {
-  const client = useApolloClient();
-
-  // 读取缓存
-  const data = client.readQuery({ query: GET_USERS });
-
-  // 写入缓存
-  client.writeQuery({
-    query: GET_USERS,
-    data: { users: [...data.users, newUser] },
-  });
-
-  // 驱逐特定对象
-  client.cache.evict({ id: "User:1" });
-  client.cache.gc(); // 垃圾回收无引用对象
-}
-```
+> 缓存设计（规范化缓存 vs 文档缓存、fetchPolicy、Mutation 后缓存更新、手动操作缓存）详见 [缓存](/programming/web-backend/graphql/caching)
 
 ---
 

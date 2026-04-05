@@ -130,15 +130,38 @@ const resolvers = {
   },
   Mutation: {
     deleteUser: async (_, { id }, { user, db }) => {
-      if (!user) throw new GraphQLError("Unauthenticated");
-      if (user.role !== "ADMIN") throw new GraphQLError("Forbidden");
+      if (!user) {
+        throw new GraphQLError("Authentication required", {
+          extensions: { code: "UNAUTHENTICATED" },
+        });
+      }
+      if (user.role !== "ADMIN") {
+        throw new GraphQLError("Admin access required", {
+          extensions: { code: "FORBIDDEN" },
+        });
+      }
       return db.users.findByIdAndDelete(id);
     },
   },
 };
 ```
 
+::: warning 常用错误码约定
+
+GraphQL 没有标准错误码规范，以下是 Apollo 生态中常用的 `extensions.code`：
+
+| code | 含义 | 对应 HTTP |
+| --- | --- | --- |
+| `BAD_USER_INPUT` | 参数校验失败 | 400 |
+| `UNAUTHENTICATED` | 未登录 / Token 失效 | 401 |
+| `FORBIDDEN` | 权限不足 | 403 |
+| `NOT_FOUND` | 资源不存在 | 404 |
+| `INTERNAL_SERVER_ERROR` | 服务端内部错误 | 500 |
+
+:::
+
 > 客户端携带 Token 的配置见 [Apollo — 携带认证 Token](/programming/web-backend/graphql/apollo#携带认证-token)
+> 错误响应格式和部分成功机制见 [安全与错误处理 — 错误处理](/programming/web-backend/graphql/security#错误处理)
 
 ---
 

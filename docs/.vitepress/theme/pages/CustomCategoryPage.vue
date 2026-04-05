@@ -371,10 +371,7 @@ html.category-page-active .VPContent {
   --vp-c-text-3: var(--STUDY-NOTES--cyber-text-muted);
 }
 
-/* Hide VitePress nav on category page */
-html.category-page-active .VPNav {
-  display: none;
-}
+/* Keep VitePress nav visible on category page for language switcher */
 
 /* Lock scroll on state page (empty/draft) */
 html.category-state-active,

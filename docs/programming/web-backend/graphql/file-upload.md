@@ -1,47 +1,56 @@
 # 文件上传
 
-> GraphQL 规范本身不支持文件上传，需要借助额外方案实现
+## 问题
 
----
+GraphQL 的请求和响应都是 JSON，而 JSON 无法承载二进制文件。所以 GraphQL 本身没有文件上传功能，需要绕过 JSON 这一层来实现
 
-## 常见方案对比
-
-| 方案             | 原理                                        | 优点                                     | 缺点                                           |
-| ---------------- | ------------------------------------------- | ---------------------------------------- | ---------------------------------------------- |
-| 签名 URL（推荐） | Mutation 获取上传 URL → 客户端直传 OSS/S3   | GraphQL 职责清晰、支持大文件、可断点续传 | 需要额外的存储服务配置                         |
-| graphql-upload   | multipart/form-data 直接发送到 GraphQL 端点 | 一次请求完成、API 集中                   | 大文件占用服务端内存、Apollo Server 4 不再内置 |
-| 混合方案         | 文件走 REST 端点，元数据走 GraphQL          | 各取所长、灵活                           | 需维护两套 API                                 |
-
----
-
-## 方案一：签名 URL（推荐）
-
-客户端通过 Mutation 获取预签名 URL，然后直接上传到云存储（S3、OSS、GCS 等），最后将文件地址回传给 GraphQL
+常见的做法有三种，核心区别是**文件经不经过 GraphQL 服务端**：
 
 ```txt
-客户端                      GraphQL Server              S3 / OSS
-  │                              │                         │
-  │── mutation getUploadUrl ───▶ │                         │
-  │                              │── 生成预签名 URL ──────▶ │
-  │◀── { uploadUrl, fileKey } ── │                         │
-  │                              │                         │
-  │── PUT 文件到 uploadUrl ──────────────────────────────▶ │
-  │◀── 200 OK ──────────────────────────────────────────── │
-  │                              │                         │
-  │── mutation saveFile ───────▶ │                         │
-  │   { fileKey, fileName }      │── 保存文件记录           │
-  │◀── { file: { url, ... } } ── │                         │
+方案一：签名 URL（文件不经过 GraphQL）
+  Client ──▶ GraphQL: "给我上传凭证"
+  Client ──▶ S3/OSS: 直接上传文件      ← 文件直传云存储
+  Client ──▶ GraphQL: "文件传好了，记录一下"
+
+方案二：graphql-upload（文件经过 GraphQL）
+  Client ──▶ GraphQL: 文件 + 请求一起发   ← 文件先到 GraphQL 服务端
+
+方案三：混合（文件走 REST，元数据走 GraphQL）
+  Client ──▶ REST: 上传文件
+  Client ──▶ GraphQL: 保存元数据
+```
+
+| 方案 | 文件经过 GraphQL | 适用场景 |
+| --- | --- | --- |
+| 签名 URL | 不经过 | 新项目、有云存储、大文件 |
+| graphql-upload | 经过 | 小文件（头像、图标）、想简化流程 |
+| 混合方案 | 不经过 | 已有 REST 上传服务 |
+
+---
+
+## 方案一：签名 URL
+
+> 推荐方案
+
+思路：GraphQL 只负责**生成上传凭证**和**保存文件记录**，文件本身由客户端直传到云存储（S3/OSS/GCS），不经过 GraphQL 服务端
+
+分三步：
+
+```txt
+步骤                        做什么                           谁处理
+─────────────────────────────────────────────────────────────────────
+① getUploadUrl Mutation     获取预签名 URL 和文件标识         GraphQL
+② PUT 文件                  客户端用预签名 URL 直传云存储     客户端 → S3
+③ saveFile Mutation         告诉 GraphQL "文件传好了"         GraphQL
 ```
 
 ---
 
-### Schema 定义
+### 服务端
 
 ```graphql
 type Mutation {
-  # 第一步：获取上传 URL
   getUploadUrl(input: GetUploadUrlInput!): UploadUrlPayload!
-  # 第二步：上传完成后保存文件记录
   saveFile(input: SaveFileInput!): File!
 }
 
@@ -51,8 +60,8 @@ input GetUploadUrlInput {
 }
 
 type UploadUrlPayload {
-  uploadUrl: String!
-  fileKey: String!
+  uploadUrl: String!     # 预签名 URL，客户端用这个直传文件
+  fileKey: String!       # 文件在云存储中的路径标识
 }
 
 input SaveFileInput {
@@ -61,20 +70,7 @@ input SaveFileInput {
   contentType: String!
   size: Int!
 }
-
-type File {
-  id: ID!
-  url: String!
-  fileName: String!
-  contentType: String!
-  size: Int!
-  createdAt: DateTime!
-}
 ```
-
----
-
-### 服务端 Resolver
 
 ```ts
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
@@ -84,6 +80,7 @@ const s3 = new S3Client({ region: "ap-northeast-1" });
 
 const resolvers = {
   Mutation: {
+    // ① 生成预签名 URL
     getUploadUrl: async (_, { input }) => {
       const fileKey = `uploads/${Date.now()}-${input.fileName}`;
       const command = new PutObjectCommand({
@@ -95,12 +92,12 @@ const resolvers = {
       return { uploadUrl, fileKey };
     },
 
+    // ③ 保存文件记录
     saveFile: async (_, { input }, { db }) => {
-      const file = await db.files.create({
+      return db.files.create({
         ...input,
         url: `https://my-bucket.s3.amazonaws.com/${input.fileKey}`,
       });
-      return file;
     },
   },
 };
@@ -108,23 +105,23 @@ const resolvers = {
 
 ---
 
-### 客户端使用
+### 客户端
 
 ```ts
-// 1. 获取上传 URL
+// ① 获取上传凭证
 const { data } = await client.mutate({
   mutation: GET_UPLOAD_URL,
   variables: { input: { fileName: "photo.jpg", contentType: "image/jpeg" } },
 });
 
-// 2. 直传到 S3/OSS
+// ② 直传到 S3（不经过 GraphQL 服务端）
 await fetch(data.getUploadUrl.uploadUrl, {
   method: "PUT",
-  body: file,
+  body: file, // HTMLInputElement.files[0]
   headers: { "Content-Type": "image/jpeg" },
 });
 
-// 3. 保存文件记录
+// ③ 告诉 GraphQL 文件传好了
 await client.mutate({
   mutation: SAVE_FILE,
   variables: {
@@ -142,15 +139,20 @@ await client.mutate({
 
 ## 方案二：graphql-upload
 
-通过 multipart 请求直接将文件发送到 GraphQL 端点
+文件通过 multipart/form-data 直接发送到 GraphQL 端点，一次请求完成。适合小文件场景
 
 ```zsh
 % npm install graphql-upload
 ```
 
+::: warning Apollo Server 4 兼容性
+
+Apollo Server 4 移除了内置的文件上传支持，需要额外配置 Express 中间件（`graphqlUploadExpress`），不能直接用 `startStandaloneServer`
+:::
+
 ---
 
-### Schema 定义
+### 服务端
 
 ```graphql
 scalar Upload
@@ -159,10 +161,6 @@ type Mutation {
   uploadFile(file: Upload!): File!
 }
 ```
-
----
-
-### 服务端 Resolver
 
 ```ts
 import { GraphQLUpload } from "graphql-upload";
@@ -177,7 +175,6 @@ const resolvers = {
       const { createReadStream, filename, mimetype } = await file;
       const path = `./uploads/${Date.now()}-${filename}`;
 
-      // 将文件流写入磁盘
       await pipeline(createReadStream(), createWriteStream(path));
 
       return {
@@ -185,7 +182,7 @@ const resolvers = {
         url: path,
         fileName: filename,
         contentType: mimetype,
-        size: 0, // 需从文件流中获取
+        size: 0,
       };
     },
   },
@@ -194,51 +191,45 @@ const resolvers = {
 
 ---
 
-### 客户端使用（Apollo Client）
+### 客户端
+
+需要 `apollo-upload-client` 替换默认的 HTTP Link：
 
 ```ts
 import { createUploadLink } from "apollo-upload-client";
 
+// 替换默认的 httpLink（两者不能同时使用）
 const client = new ApolloClient({
   link: createUploadLink({ uri: "http://localhost:4000/graphql" }),
   cache: new InMemoryCache(),
 });
 
 // 直接将 File 对象作为变量传递
-const UPLOAD_FILE = gql`
-  mutation UploadFile($file: Upload!) {
-    uploadFile(file: $file) {
-      id
-      url
-      fileName
-    }
-  }
-`;
-
 await client.mutate({
-  mutation: UPLOAD_FILE,
+  mutation: gql`
+    mutation UploadFile($file: Upload!) {
+      uploadFile(file: $file) { id url fileName }
+    }
+  `,
   variables: { file: selectedFile }, // HTMLInputElement.files[0]
 });
 ```
 
-::: warning 注意
+::: danger 大文件风险
 
-- Apollo Server 4 移除了内置的文件上传支持，需要额外中间件集成
-- 大文件上传会占用服务端内存，生产环境建议使用签名 URL 方案
-- `apollo-upload-client` 替换了默认的 `httpLink`，不能同时使用
+整个文件会加载到 GraphQL 服务端内存。上传 100MB 的文件 = 服务端内存多占 100MB。生产环境传大文件应该用签名 URL 方案
 :::
 
 ---
 
 ## 方案三：混合方案
 
-文件上传走 REST，文件元数据走 GraphQL
+文件上传走已有的 REST 端点，GraphQL 只处理元数据。适合已有 REST 文件上传服务、不想改造的场景
 
 ```ts
 // 1. REST 上传文件
 const formData = new FormData();
 formData.append("file", selectedFile);
-
 const res = await fetch("/api/upload", { method: "POST", body: formData });
 const { fileUrl } = await res.json();
 
@@ -249,10 +240,8 @@ await client.mutate({
     input: {
       title: "My Post",
       content: "...",
-      coverImage: fileUrl, // 将文件 URL 作为普通字符串传递
+      coverImage: fileUrl, // 文件 URL 作为普通字符串传递
     },
   },
 });
 ```
-
-适合已有 REST 文件上传服务、不想改造的场景

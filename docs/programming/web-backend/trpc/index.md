@@ -59,6 +59,56 @@ TypeScript 全栈项目、前后端同一团队或 monorepo、追求最快开发
 | Context（上下文）    | 每个请求共享的数据（如 db、session）                 | [详见](/programming/web-backend/trpc/sample-next#上下文)     |
 | Client（客户端对象） | 客户端调用服务端过程的类型安全代理                   | [详见](/programming/web-backend/trpc/sample-next#客户端对象) |
 
+## 类型推导原理
+
+tRPC 不需要 codegen、不需要 Schema 文件——**类型直接从服务端代码推导到客户端**
+
+```txt
+GraphQL:  Schema (.graphql) → codegen → 生成 TS 类型 → 客户端使用
+tRPC:     服务端代码 → TypeScript 编译器直接推导 → 客户端自动获得类型
+```
+
+核心机制：
+
+::: code-group
+
+```ts [服务端]
+// 定义 procedure
+const appRouter = router({
+  getUser: publicProcedure
+    .input(z.object({ id: z.string() }))  // Zod schema 定义输入
+    .query(async ({ input }) => {
+      return db.user.findUnique({ where: { id: input.id } });
+      // 返回类型 = Prisma 推导的 User | null
+    }),
+});
+
+// 导出路由器的类型（只导出类型，不导出运行时代码）
+export type AppRouter = typeof appRouter;
+```
+
+```ts [客户端]
+// import 类型
+import type { AppRouter } from "../server/router";
+
+const trpc = createTRPCClient<AppRouter>({ ... });
+
+// TS 自动推导：
+// - trpc.getUser.query({ id: "1" }) 的输入必须是 { id: string }
+// - 返回值类型自动是 User | null
+// - 如果服务端改了字段名，客户端立即报类型错误
+```
+
+:::
+
+::: tip 为什么不需要 codegen
+
+- tRPC 利用了 TypeScript 的 `typeof` + 泛型推导——`AppRouter` 类型包含了所有 procedure 的输入/输出类型信息
+- `import type` 只在编译时存在，不会被打包到客户端 JS 中
+- 前提条件：前后端必须在同一个 TypeScript 项目（monorepo）中，否则类型无法传递
+
+:::
+
 ## 下载安装
 
 ```zsh

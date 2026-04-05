@@ -201,7 +201,8 @@ wss.on("connection", (ws) => {
 
 - `ws.close()` — 发送关闭帧，等待对方确认后断开（优雅关闭）
 - `ws.terminate()` — 直接销毁底层 TCP 连接（强制关闭，用于清理死连接）
-  :::
+
+:::
 
 Socket.IO 内置心跳机制，通过配置即可：
 
@@ -255,7 +256,8 @@ server.listen(3000, () => {
 - 关键在于用 `createServer(app)` 创建 HTTP 服务器，再将其传给 `WebSocketServer`
 - `app.listen()` 内部也是调用 `createServer()`，但拿不到 server 实例
 - HTTP 请求走 Express 路由，WebSocket 升级请求走 ws 库，互不干扰
-  :::
+
+:::
 
 ---
 

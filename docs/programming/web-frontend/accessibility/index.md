@@ -13,7 +13,8 @@ Web 无障碍 — 让所有用户（包括残障用户）都能正常使用 Web 
 - **WCAG 准则**: W3C 制定的国际标准 WCAG 2.2 是事实标准
 - **4 原则（POUR）**: Perceivable（可感知）・Operable（可操作）・Understandable（可理解）・Robust（健壮性）
 - **开发落地**: 语义化 HTML、WAI-ARIA、键盘操作、色彩对比度是主要实现要点
-  :::
+
+:::
 
 ```
 WCAG 达标等级

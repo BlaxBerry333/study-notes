@@ -272,7 +272,7 @@ function VirtualizedList({ items }: { items: Item[] }) {
 
 > useTransition / useDeferredValue — 区分紧急更新和非紧急更新，保持 UI 响应
 
-## React 18 的并发特性允许标记某些状态更新为"非紧急"，让 React 优先处理用户交互，延迟处理计算量大的渲染
+React 18 的并发特性允许标记某些状态更新为"非紧急"，让 React 优先处理用户交互，延迟处理计算量大的渲染
 
 ### useTransition
 
@@ -355,8 +355,6 @@ function SearchResults({ query }: { query: string }) {
 ## Web Worker 卸载计算
 
 > 把 CPU 密集任务移出主线程 — useTransition 解决不了的场景
-
-## useTransition 只是调度优先级，计算仍然在主线程上执行。对于真正昂贵的任务（大数据处理、加密、图像处理），需要把计算完全移出主线程
 
 ### Worker 通信
 
@@ -461,5 +459,86 @@ function CsvAnalyzer() {
 | 过滤/排序几千条数据（<50ms）         | `useMemo` 就够了                     |
 | 过滤/排序导致输入卡顿（50-200ms）    | `useTransition` / `useDeferredValue` |
 | 解析大文件、加密、图像处理（>200ms） | Web Worker                           |
+
+:::
+
+---
+
+## Core Web Vitals
+
+> Google 定义的用户体验核心指标——影响 SEO 排名和用户留存
+
+| 指标 | 含义 | 好 | 差 | 优化方向 |
+| --- | --- | --- | --- | --- |
+| **LCP** | 最大内容绘制——页面主要内容多快可见 | < 2.5s | > 4s | 优化首屏资源加载 |
+| **INP** | 交互延迟——用户操作到 UI 响应的时间 | < 200ms | > 500ms | 减少主线程阻塞 |
+| **CLS** | 累积布局偏移——页面内容意外移动的程度 | < 0.1 | > 0.25 | 预留图片/广告尺寸 |
+
+---
+
+### LCP 优化
+
+```tsx
+// 关键图片预加载
+<link rel="preload" href="/hero.webp" as="image" />
+
+// 首屏图片不要 lazy load
+<img src="/hero.webp" fetchPriority="high" /> // 首屏关键图片
+<img src="/below.webp" loading="lazy" />       // 非首屏才 lazy
+
+// 减少阻塞资源
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<script async src="/analytics.js" />
+```
+
+---
+
+### INP 优化
+
+```tsx
+// 耗时操作不阻塞交互
+const [isPending, startTransition] = useTransition();
+
+function handleClick() {
+  startTransition(() => {
+    // 重计算放在 transition 中，不阻塞用户下一次交互
+    setFilteredItems(heavyFilter(items));
+  });
+}
+
+// 更重的计算移到 Web Worker（详见上方 Web Worker 章节）
+```
+
+---
+
+### CLS 优化
+
+```tsx
+// ✅ 图片始终指定尺寸——防止加载后布局跳动
+<img src={src} width={800} height={600} alt={alt} />
+
+// ✅ 骨架屏占位——异步内容加载前保持布局稳定
+<Suspense fallback={<CardSkeleton />}>
+  <AsyncCard />
+</Suspense>
+
+// ❌ 避免在已有内容上方动态插入元素
+// ❌ 避免无尺寸的 iframe / 广告 / 字体导致的闪烁
+```
+
+::: tip 测量工具
+
+- **Chrome DevTools → Lighthouse**：本地测量，给出具体优化建议
+- **Chrome DevTools → Performance**：录制运行时性能，分析长任务
+- **web.dev/measure**：在线测量，使用真实用户数据
+- `web-vitals` npm 包：在代码中上报真实用户指标
+
+```ts
+import { onLCP, onINP, onCLS } from "web-vitals";
+
+onLCP(console.log);
+onINP(console.log);
+onCLS(console.log);
+```
 
 :::
